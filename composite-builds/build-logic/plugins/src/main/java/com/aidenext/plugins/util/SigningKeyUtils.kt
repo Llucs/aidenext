@@ -21,9 +21,10 @@ import com.aidenext.build.config.AUTH_PASS
 import com.aidenext.build.config.AUTH_USER
 import com.aidenext.build.config.KEY_BIN
 import com.aidenext.build.config.KEY_URL
-import org.gradle.api.Project
 import com.aidenext.build.config.signingKey
+import org.gradle.api.Project
 import org.gradle.api.invocation.Gradle
+import org.gradle.process.ExecSpec
 import java.util.Base64
 
 /**
@@ -59,17 +60,15 @@ object SigningKeyUtils {
     val pass = getEnvOrProp(AUTH_PASS) ?: return
 
     logger.info("Downloading signing key...")
-    val result = exec {
-      var rootGradle: Gradle? = gradle
-      while (rootGradle?.parent != null) {
-        rootGradle = rootGradle.parent
-      }
-
-      workingDir(rootGradle!!.rootProject.projectDir)
-      commandLine("bash", "./scripts/download_key.sh", signingKey.absolutePath, url, user, pass)
+    var rootGradle: Gradle? = gradle
+    while (rootGradle?.parent != null) {
+      rootGradle = rootGradle.parent
     }
 
-    result.assertNormalExitValue()
+    exec {
+      workingDir = rootGradle!!.rootProject.projectDir
+      commandLine("bash", "./scripts/download_key.sh", signingKey.absolutePath, url, user, pass)
+    }
   }
 
   internal fun Project.getEnvOrProp(key: String, warn: Boolean = true): String? {
