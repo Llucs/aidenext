@@ -80,7 +80,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath("com.mooltiverse.oss.nyx:gradle:3.1.7")
+    classpath("com.mooltiverse.oss.nyx:gradle:3.1.4")
   }
 }
 
