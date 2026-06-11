@@ -64,28 +64,24 @@ fun Project.configureAndroidModule(
   }
 
   extensions.getByType(BaseExtension::class.java).apply {
-    packaging {
-      resources.excludes.addAll(
-        listOf(
-          "META-INF/CHANGES",
-          "META-INF/README.md",
-        )
+    packagingOptions {
+      excludes += listOf(
+        "META-INF/CHANGES",
+        "META-INF/README.md",
       )
-      resources.pickFirsts.addAll(
-        listOf(
-          "META-INF/eclipse.inf",
-          "META-INF/LICENSE.md",
-          "META-INF/AL2.0",
-          "META-INF/LGPL2.1",
-          "META-INF/INDEX.LIST",
-          "about_files/LICENSE-2.0.txt",
-          "plugin.xml",
-          "plugin.properties",
-          "about.mappings",
-          "about.properties",
-          "about.ini",
-          "modeling32.png"
-        )
+      pickFirsts += listOf(
+        "META-INF/eclipse.inf",
+        "META-INF/LICENSE.md",
+        "META-INF/AL2.0",
+        "META-INF/LGPL2.1",
+        "META-INF/INDEX.LIST",
+        "about_files/LICENSE-2.0.txt",
+        "plugin.xml",
+        "plugin.properties",
+        "about.mappings",
+        "about.properties",
+        "about.ini",
+        "modeling32.png"
       )
     }
   }
