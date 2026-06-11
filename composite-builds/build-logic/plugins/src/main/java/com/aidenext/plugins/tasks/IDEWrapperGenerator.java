@@ -58,8 +58,7 @@ import org.gradle.api.tasks.options.Option;
 import org.gradle.api.tasks.options.OptionValues;
 import org.gradle.api.tasks.wrapper.Wrapper.DistributionType;
 import org.gradle.api.tasks.wrapper.Wrapper.PathBase;
-import org.gradle.api.tasks.wrapper.WrapperVersionsResources;
-import org.gradle.api.tasks.wrapper.internal.DefaultWrapperVersionsResources;
+import org.gradle.api.resources.TextResource;
 import org.gradle.util.GradleVersion;
 import org.gradle.util.internal.GUtil;
 import org.gradle.util.internal.WrapperDistributionUrlConverter;
@@ -238,16 +237,14 @@ public class IDEWrapperGenerator {
 
   /**
    * Set Wrapper versions resources.
-   *
-   * @since 8.1
    */
-  @Incubating
-  public void setWrapperVersionsResources(WrapperVersionsResources wrapperVersionsResources) {
-    DefaultWrapperVersionsResources defaultWrapperVersionsResources = (DefaultWrapperVersionsResources) wrapperVersionsResources;
-    gradleVersionResolver.setTextResources(defaultWrapperVersionsResources.getLatest(),
-        defaultWrapperVersionsResources.getReleaseCandidate(),
-        defaultWrapperVersionsResources.getNightly(),
-        defaultWrapperVersionsResources.getReleaseNightly());
+  public void setWrapperVersionsResources(
+      TextResource latest,
+      TextResource releaseCandidate,
+      TextResource nightly,
+      TextResource releaseNightly
+  ) {
+    gradleVersionResolver.setTextResources(latest, releaseCandidate, nightly, releaseNightly);
   }
 
   /**
