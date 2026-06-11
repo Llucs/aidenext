@@ -72,7 +72,6 @@ dependencies {
   implementation(libs.google.auto.service.annotations)
   implementation(libs.xml.xercesImpl)
   implementation(libs.xml.apis)
-  implementation(libs.tooling.gradleApi)
 
   testImplementation(projects.testing.gradleToolingTest)
 
