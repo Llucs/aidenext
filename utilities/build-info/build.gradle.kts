@@ -27,8 +27,6 @@ import com.aidenext.build.config.downloadVersion
 import com.aidenext.build.config.publishingVersion
 import com.aidenext.build.config.replaceContents
 import com.aidenext.build.config.simpleVersionName
-import org.jetbrains.kotlin.incremental.createDirectory
-
 plugins {
   //noinspection JavaPluginLanguageLevel
   id("java-library")
@@ -38,11 +36,11 @@ plugins {
 description = "Information about the AndroidIDE build"
 
 val buildInfoGenDir: Provider<Directory> = project.layout.buildDirectory.dir("generated/buildInfo")
-  .also { it.get().asFile.createDirectory() }
+  .also { it.get().asFile.mkdirs() }
 
 sourceSets { getByName("main").java.srcDir(buildInfoGenDir) }
 
-tasks.create("generateBuildInfo") {
+tasks.register("generateBuildInfo") {
   val buildInfoPath = "com/itsaky/androidide/buildinfo/BuildInfo.java"
   val buildInfo = buildInfoGenDir.get().file(buildInfoPath)
   val buildInfoIn = project.file("src/main/java/${buildInfoPath}.in")
