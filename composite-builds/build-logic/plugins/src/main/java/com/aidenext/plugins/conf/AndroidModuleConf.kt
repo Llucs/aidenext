@@ -93,7 +93,7 @@ fun Project.configureAndroidModule(
       minSdk = BuildConfig.minSdk
       targetSdk = BuildConfig.targetSdk
       versionCode = projectVersionCode
-      versionName = rootProject.version.toString()
+      versionName = rootProject.version.toString().removePrefix("v")
 
       // required
       multiDexEnabled = true

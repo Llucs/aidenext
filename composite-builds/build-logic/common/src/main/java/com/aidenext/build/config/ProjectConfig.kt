@@ -61,7 +61,7 @@ val Project.simpleVersionName: String
     }
 
     val version = rootProject.version.toString()
-    val regex = Regex("^v\\d+\\.?\\d+\\.?\\d+-\\w+")
+    val regex = Regex("^v\\d+\\.\\d+\\.\\d+(?:-\\w+)?")
 
     val simpleVersion = regex.find(version)?.value?.substring(1)?.also {
       if (shouldPrintVersionName) {
