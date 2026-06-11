@@ -81,7 +81,7 @@ subprojects {
     }
   }
 
-  kotlin {
+  tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
       jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget(BuildConfig.javaVersion.toString())
       freeCompilerArgs.add("-Xstring-concat=inline")
