@@ -63,7 +63,7 @@ fun Project.configureAndroidModule(
     androidJar.copyTo(frameworkStubsJar)
   }
 
-  extensions.getByType(CommonExtension::class.java).run {
+  extensions.getByType(BaseExtension::class.java).apply {
     packaging {
       resources.excludes.addAll(
         listOf(

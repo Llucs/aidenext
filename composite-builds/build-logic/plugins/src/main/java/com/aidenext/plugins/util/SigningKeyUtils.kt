@@ -22,9 +22,9 @@ import com.aidenext.build.config.AUTH_USER
 import com.aidenext.build.config.KEY_BIN
 import com.aidenext.build.config.KEY_URL
 import com.aidenext.build.config.signingKey
+import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.invocation.Gradle
-import org.gradle.process.ExecSpec
 import java.util.Base64
 
 /**
@@ -65,9 +65,15 @@ object SigningKeyUtils {
       rootGradle = rootGradle.parent
     }
 
-    exec {
-      workingDir = rootGradle!!.rootProject.projectDir
-      commandLine("bash", "./scripts/download_key.sh", signingKey.absolutePath, url, user, pass)
+    val process = ProcessBuilder(
+      "bash", "./scripts/download_key.sh", signingKey.absolutePath, url, user, pass
+    )
+      .directory(rootGradle!!.rootProject.projectDir)
+      .inheritIO()
+      .start()
+    val exitCode = process.waitFor()
+    if (exitCode != 0) {
+      throw GradleException("Failed to download signing key (exit code $exitCode)")
     }
   }
 
