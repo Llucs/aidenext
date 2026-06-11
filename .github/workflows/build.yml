@@ -28,6 +28,7 @@ env:
   BUILD_JAVA_DIST: 'temurin'
   BUILD_IS_RELEASE: ${{ github.ref == 'refs/heads/main' }}
   ReleaseAIDENext: ${{ github.ref == 'refs/heads/main' }}
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build_apk:

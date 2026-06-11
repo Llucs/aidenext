@@ -16,7 +16,6 @@
  */
 
 
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.aidenext.build.config.BuildConfig
 
 plugins {
@@ -45,6 +44,8 @@ dependencies {
   annotationProcessor("net.ltgt.gradle.incap:incap-processor:$incap")
 }
 
-tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "17"
+kotlin {
+  compilerOptions {
+    jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+  }
 }

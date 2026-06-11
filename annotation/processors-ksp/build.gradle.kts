@@ -17,7 +17,6 @@
 
 
 import com.aidenext.build.config.BuildConfig
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   kotlin("jvm")
@@ -43,6 +42,8 @@ sourceSets.main {
   java.srcDirs("src/main/kotlin")
 }
 
-tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "17"
+kotlin {
+  compilerOptions {
+    jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+  }
 }

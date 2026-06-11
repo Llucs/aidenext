@@ -15,8 +15,6 @@
  *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
   `kotlin-dsl`
 }
@@ -27,8 +25,10 @@ repositories {
   mavenCentral()
 }
 
-tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "17"
+kotlin {
+  compilerOptions {
+    jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+  }
 }
 
 dependencies {

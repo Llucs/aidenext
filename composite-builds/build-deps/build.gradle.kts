@@ -16,7 +16,6 @@
  */
 
 import com.android.build.gradle.BaseExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   alias(libs.plugins.android.application) apply false
@@ -47,7 +46,7 @@ subprojects {
     }
   }
 
-  tasks.withType(KotlinCompile::class.java) {
-    kotlinOptions.jvmTarget = "11"
+  tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    compilerOptions.jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
   }
 }

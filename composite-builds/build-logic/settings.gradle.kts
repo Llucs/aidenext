@@ -20,14 +20,6 @@
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 dependencyResolutionManagement {
-
-  includeBuild("../build-deps-common") {
-    dependencySubstitution {
-      substitute(module("com.aidenext.build:desugaring-core"))
-        .using(project(":desugaring-core"))
-    }
-  }
-
   repositories {
     google()
     mavenCentral()
@@ -40,10 +32,16 @@ dependencyResolutionManagement {
   }
 }
 
+includeBuild("../build-deps-common") {
+  dependencySubstitution {
+    substitute(module("com.aidenext.build:desugaring-core"))
+      .using(project(":desugaring-core"))
+  }
+}
+
 include(
   ":common",
   ":desugaring",
-  ":desugaring-core",
   ":plugins",
   ":properties-parser"
 )
