@@ -28,7 +28,7 @@ env:
   BUILD_JAVA_DIST: 'temurin'
   BUILD_IS_RELEASE: ${{ github.ref == 'refs/heads/main' }}
   ReleaseAIDENext: ${{ github.ref == 'refs/heads/main' }}
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  # Using latest actions to avoid Node.js deprecation warnings
 
 jobs:
   build_apk:
@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.12.1
+        uses: styfle/cancel-workflow-action@0.12.3
         with:
           access_token: ${{ github.token }}
       - name: Checkout

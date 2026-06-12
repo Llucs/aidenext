@@ -32,6 +32,7 @@ import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.create
+
 import org.gradle.kotlin.dsl.withType
 import java.io.File
 
@@ -128,7 +129,7 @@ private fun Project.configureMavenLocal() {
     }
   }
 
-  tasks.register<Delete>("deleteBuildMavenLocal") {
+  tasks.register("deleteBuildMavenLocal", Delete::class.java) {
     delete(mavenLocalPath)
   }
 
