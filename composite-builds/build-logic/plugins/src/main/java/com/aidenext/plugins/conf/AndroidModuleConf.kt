@@ -71,27 +71,25 @@ fun Project.configureAndroidModule(
   }
 
   androidExt.apply {
-    packaging {
-      resources {
-        excludes += listOf(
-          "META-INF/CHANGES",
-          "META-INF/README.md",
-        )
-        pickFirsts += listOf(
-          "META-INF/eclipse.inf",
-          "META-INF/LICENSE.md",
-          "META-INF/AL2.0",
-          "META-INF/LGPL2.1",
-          "META-INF/INDEX.LIST",
-          "about_files/LICENSE-2.0.txt",
-          "plugin.xml",
-          "plugin.properties",
-          "about.mappings",
-          "about.properties",
-          "about.ini",
-          "modeling32.png"
-        )
-      }
+    packagingOptions {
+      excludes += listOf(
+        "META-INF/CHANGES",
+        "META-INF/README.md",
+      )
+      pickFirsts += listOf(
+        "META-INF/eclipse.inf",
+        "META-INF/LICENSE.md",
+        "META-INF/AL2.0",
+        "META-INF/LGPL2.1",
+        "META-INF/INDEX.LIST",
+        "about_files/LICENSE-2.0.txt",
+        "plugin.xml",
+        "plugin.properties",
+        "about.mappings",
+        "about.properties",
+        "about.ini",
+        "modeling32.png"
+      )
     }
   }
 
@@ -118,7 +116,7 @@ fun Project.configureAndroidModule(
     configureCoreLibDesugaring(this, coreLibDesugDep)
 
     if (project.plugins.hasPlugin("com.aidenext.core-app")) {
-      packaging {
+      packagingOptions {
         jniLibs {
           useLegacyPackaging = true
         }

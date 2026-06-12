@@ -17,7 +17,7 @@
 
 package com.aidenext.plugins
 
-import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.ApplicationExtension
 import com.aidenext.build.config.isFDroidBuild
 import com.aidenext.plugins.util.isAndroidModule
 import org.gradle.api.GradleException
@@ -46,11 +46,11 @@ class AndroidIDEPlugin : Plugin<Project> {
     }
 
     if (isFDroidBuild && project.plugins.hasPlugin("com.aidenext.core-app")) {
-      val androidExt = extensions.getByType(CommonExtension::class.java)
+      val appExt = extensions.getByType(ApplicationExtension::class.java)
       logger.warn("Building for F-Droid with configuration:")
-      logger.warn("applicationId = ${androidExt.defaultConfig.applicationId}")
-      logger.warn("versionName = ${androidExt.defaultConfig.versionName}")
-      logger.warn("versionCode = ${androidExt.defaultConfig.versionCode}")
+      logger.warn("applicationId = ${appExt.defaultConfig.applicationId}")
+      logger.warn("versionName = ${appExt.defaultConfig.versionName}")
+      logger.warn("versionCode = ${appExt.defaultConfig.versionCode}")
       logger.warn("--- x --- x ---")
     }
 
