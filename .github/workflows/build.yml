@@ -28,7 +28,7 @@ env:
   BUILD_JAVA_DIST: 'temurin'
   BUILD_IS_RELEASE: ${{ github.ref == 'refs/heads/main' }}
   ReleaseAIDENext: ${{ github.ref == 'refs/heads/main' }}
-  # Using latest actions to avoid Node.js deprecation warnings
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build_apk:
@@ -39,23 +39,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.12.3
+        uses: styfle/cancel-workflow-action@0.13.1
         with:
           access_token: ${{ github.token }}
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: 'recursive'
           fetch-depth: 0
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ env.BUILD_JAVA_VERSION }}
           distribution: ${{ env.BUILD_JAVA_DIST }}
       - name: Change Gradle wrapper permissions
         run: chmod +x ./gradlew
       - name: Restore cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -71,7 +71,7 @@ jobs:
         run: |
           cp core/app/build/outputs/apk/${{ matrix.build_type }}/app-*.apk ./
       - name: Upload universal ${{ matrix.build_type }} APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: apk-${{ matrix.build_type }}
           path: app-*.apk
@@ -81,19 +81,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: 'recursive'
           fetch-depth: 0
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ env.BUILD_JAVA_VERSION }}
           distribution: ${{ env.BUILD_JAVA_DIST }}
       - name: Change Gradle wrapper permissions
         run: chmod +x ./gradlew
       - name: Restore cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -107,7 +107,7 @@ jobs:
           ANDROIDIDE_TEST: true
       - name: Upload test reports
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-results-unit-tests
           path: '**/build/reports/tests/'
@@ -117,19 +117,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: 'recursive'
           fetch-depth: 0
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ env.BUILD_JAVA_VERSION }}
           distribution: ${{ env.BUILD_JAVA_DIST }}
       - name: Change Gradle wrapper permissions
         run: chmod +x ./gradlew
       - name: Restore cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -144,7 +144,7 @@ jobs:
           TEST_TOOLING_API_IMPL: true
       - name: Upload test reports
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-results-tooling-api-tests
           path: '**/build/reports/tests/'
@@ -162,24 +162,24 @@ jobs:
       && needs.run_tooling_api_tests.result == 'success'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: 'recursive'
           fetch-depth: 0
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: ${{ env.BUILD_JAVA_VERSION }}
           distribution: ${{ env.BUILD_JAVA_DIST }}
       - name: Download APKs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: apk-release
           merge-multiple: true
       - name: Change Gradle wrapper permissions
         run: chmod +x ./gradlew
       - name: Restore cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -197,7 +197,7 @@ jobs:
       - name: Publish release
         run: ./gradlew nyxMake nyxMark nyxPublish publish release --stacktrace
       - name: Archive Nyx state file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: ${{ always() }}
         with:
           name: .nyx-state-${{ github.job }}.json

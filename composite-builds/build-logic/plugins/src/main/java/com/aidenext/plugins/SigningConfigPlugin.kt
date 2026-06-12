@@ -17,7 +17,7 @@
 
 package com.aidenext.plugins
 
-import com.android.build.gradle.BaseExtension
+import com.android.build.api.dsl.CommonExtension
 import com.aidenext.build.config.KEY_ALIAS
 import com.aidenext.build.config.KEY_PASS
 import com.aidenext.build.config.KEY_STORE_PASS
@@ -52,7 +52,8 @@ class SigningConfigPlugin : Plugin<Project> {
       }
 
       // Create and apply the signing config
-      extensions.getByType(BaseExtension::class.java).let { extension ->
+      val androidExt = extensions.findByType(CommonExtension::class.java) ?: return
+      androidExt.let { extension ->
         // Keystore credentials
         val alias = getEnvOrProp(KEY_ALIAS)
         val storePass = getEnvOrProp(KEY_STORE_PASS)

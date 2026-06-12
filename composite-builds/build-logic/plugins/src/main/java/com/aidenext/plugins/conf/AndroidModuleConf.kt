@@ -17,12 +17,13 @@
 
 package com.aidenext.plugins.conf
 
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.FilterConfiguration
 import com.android.build.api.variant.impl.getFilter
-import com.android.build.gradle.BaseExtension
 import com.aidenext.build.config.BuildConfig
 import com.aidenext.build.config.FDroidConfig
 import com.aidenext.build.config.isFDroidBuild
@@ -63,30 +64,38 @@ fun Project.configureAndroidModule(
     androidJar.copyTo(frameworkStubsJar)
   }
 
-  extensions.getByType(BaseExtension::class.java).apply {
-    packagingOptions {
-      excludes += listOf(
-        "META-INF/CHANGES",
-        "META-INF/README.md",
-      )
-      pickFirsts += listOf(
-        "META-INF/eclipse.inf",
-        "META-INF/LICENSE.md",
-        "META-INF/AL2.0",
-        "META-INF/LGPL2.1",
-        "META-INF/INDEX.LIST",
-        "about_files/LICENSE-2.0.txt",
-        "plugin.xml",
-        "plugin.properties",
-        "about.mappings",
-        "about.properties",
-        "about.ini",
-        "modeling32.png"
-      )
+  val androidExt = if (isAppModule) {
+    extensions.getByType(ApplicationExtension::class.java)
+  } else {
+    extensions.getByType(LibraryExtension::class.java)
+  }
+
+  androidExt.apply {
+    packaging {
+      resources {
+        excludes += listOf(
+          "META-INF/CHANGES",
+          "META-INF/README.md",
+        )
+        pickFirsts += listOf(
+          "META-INF/eclipse.inf",
+          "META-INF/LICENSE.md",
+          "META-INF/AL2.0",
+          "META-INF/LGPL2.1",
+          "META-INF/INDEX.LIST",
+          "about_files/LICENSE-2.0.txt",
+          "plugin.xml",
+          "plugin.properties",
+          "about.mappings",
+          "about.properties",
+          "about.ini",
+          "modeling32.png"
+        )
+      }
     }
   }
 
-  extensions.getByType(BaseExtension::class.java).run {
+  androidExt.run {
     compileSdkVersion(BuildConfig.compileSdk)
 
     defaultConfig {
@@ -109,7 +118,7 @@ fun Project.configureAndroidModule(
     configureCoreLibDesugaring(this, coreLibDesugDep)
 
     if (project.plugins.hasPlugin("com.aidenext.core-app")) {
-      packagingOptions {
+      packaging {
         jniLibs {
           useLegacyPackaging = true
         }
@@ -178,7 +187,7 @@ fun Project.configureAndroidModule(
 }
 
 private fun Project.configureCoreLibDesugaring(
-  baseExtension: BaseExtension,
+  baseExtension: CommonExtension<*, *, *, *, *>,
   coreLibDesugDep: Provider<MinimalExternalModuleDependency>
 ) {
   val coreLibDesugaringEnabled = !project.plugins.hasPlugin(NoDesugarPlugin::class.java)
