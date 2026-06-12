@@ -81,7 +81,7 @@ class AndroidIDEAssetsPlugin : Plugin<Project> {
           val toolingApi = checkNotNull(rootProject.findProject(implPath)) {
             "Cannot find the Tooling Impl module with project path: '$implPath'"
           }
-          dependsOn(toolingApi.tasks.getByName("copyJar"))
+          dependsOn(toolingApi.tasks.named("copyJar"))
 
           val toolingApiJar = toolingApi.layout.buildDirectory.file("libs/tooling-api-all.jar")
 

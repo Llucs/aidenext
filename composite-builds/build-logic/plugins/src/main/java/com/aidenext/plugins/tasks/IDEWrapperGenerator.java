@@ -44,15 +44,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import javax.annotation.Nullable;
-import javax.inject.Inject;
 import kotlin.io.FilesKt;
 import org.gradle.api.GradleException;
 import org.gradle.api.Incubating;
 import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
-import org.gradle.api.internal.file.FileLookup;
-import org.gradle.api.internal.file.FileOperations;
-import org.gradle.api.internal.file.FileResolver;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.options.Option;
 import org.gradle.api.tasks.options.OptionValues;
@@ -463,9 +459,5 @@ public class IDEWrapperGenerator {
     return true;
   }
 
-  @Inject
-  protected FileLookup getFileLookup() {
-    throw new UnsupportedOperationException();
-  }
 }
 

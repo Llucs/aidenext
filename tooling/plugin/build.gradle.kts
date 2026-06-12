@@ -37,10 +37,10 @@ tasks.named<Test>("test") {
 configurations {
   val androidBuildTool = create("androidBuildTool")
 
-  getByName("compileOnly") {
+  named("compileOnly") {
     extendsFrom(androidBuildTool)
   }
-  getByName("testImplementation") {
+  named("testImplementation") {
     extendsFrom(androidBuildTool)
   }
   findByName("integrationTestImplementation")?.run {

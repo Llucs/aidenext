@@ -53,9 +53,9 @@ fun Project.configureMavenPublish() {
     rootProject.subprojects {
       if (project.path in projectsRequiringMavenLocalForTests) {
         tasks.withType<Test> {
-          for ((project, _) in mavenLocalRepos) {
+          for ((proj, _) in mavenLocalRepos) {
             dependsOn(
-              project(project).tasks.getByName("publishAllPublicationsToBuildMavenLocalRepository")
+              project(proj).tasks.named("publishAllPublicationsToBuildMavenLocalRepository")
             )
           }
         }
@@ -128,13 +128,13 @@ private fun Project.configureMavenLocal() {
     }
   }
 
-  tasks.create<Delete>("deleteBuildMavenLocal") {
+  tasks.register<Delete>("deleteBuildMavenLocal") {
     delete(mavenLocalPath)
   }
 
   if (project.path in projectsRequiringMavenLocalForTests) {
     tasks.withType<Test> {
-      dependsOn(tasks.getByName("publishAllPublicationsToBuildMavenLocalRepository"))
+      dependsOn(tasks.named("publishAllPublicationsToBuildMavenLocalRepository"))
       doFirst {
         val file = mavenLocalPath.get().file("repos.txt").asFile
         file.writeText(mavenLocalRepos.values.joinToString(separator = File.pathSeparator))
@@ -143,8 +143,8 @@ private fun Project.configureMavenLocal() {
   }
 
   afterEvaluate {
-    tasks.getByName("publishAllPublicationsToBuildMavenLocalRepository") {
-      dependsOn(tasks.getByName("deleteBuildMavenLocal"))
+    tasks.named("publishAllPublicationsToBuildMavenLocalRepository") {
+      dependsOn(tasks.named("deleteBuildMavenLocal"))
     }
   }
 }

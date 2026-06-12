@@ -19,7 +19,6 @@ package com.aidenext.plugins.tasks.internal;
 
 import org.gradle.api.NonNullApi;
 import org.gradle.api.tasks.wrapper.Wrapper;
-import org.gradle.wrapper.Install;
 
 @NonNullApi
 public class WrapperDefaults {
@@ -27,7 +26,7 @@ public class WrapperDefaults {
   public static final String JAR_FILE_PATH = "gradle/wrapper/gradle-wrapper.jar";
   public static final Wrapper.DistributionType DISTRIBUTION_TYPE = Wrapper.DistributionType.BIN;
 
-  public static final String DISTRIBUTION_PATH = Install.DEFAULT_DISTRIBUTION_PATH;
+  public static final String DISTRIBUTION_PATH = "wrapper/dists";
   public static final Wrapper.PathBase DISTRIBUTION_BASE = Wrapper.PathBase.GRADLE_USER_HOME;
   public static final String ARCHIVE_PATH = DISTRIBUTION_PATH;
   public static final Wrapper.PathBase ARCHIVE_BASE = DISTRIBUTION_BASE;

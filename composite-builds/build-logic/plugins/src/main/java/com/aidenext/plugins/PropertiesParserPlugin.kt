@@ -66,7 +66,7 @@ class PropertiesParserPlugin : Plugin<Project> {
     target.tasks.register("cleanCompiledProperties", Delete::class.java) { delete(target.propsDir) }
 
     target.tasks.withType(JavaCompile::class.java) { dependsOn("compileProperties") }
-    target.tasks.getByName("clean").dependsOn("cleanCompiledProperties")
+    target.tasks.named("clean") { dependsOn("cleanCompiledProperties") }
   }
 }
 

@@ -61,7 +61,7 @@ class AndroidIDEPlugin : Plugin<Project> {
 
     logger.info("${project.path} will run task '$taskName' for tests in CI")
 
-    project.tasks.create("runTestsInCI") {
+    project.tasks.register("runTestsInCI") {
       dependsOn(taskName)
     }
   }

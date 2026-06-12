@@ -17,22 +17,19 @@
 
 package com.aidenext.plugins.tasks.internal;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.io.ByteStreams;
 import org.gradle.api.GradleException;
 import org.gradle.api.NonNullApi;
 import org.gradle.api.UncheckedIOException;
-import org.gradle.api.internal.plugins.StartScriptGenerator;
 import org.gradle.api.tasks.wrapper.Wrapper;
 import org.gradle.api.tasks.wrapper.Wrapper.PathBase;
-import org.gradle.internal.util.PropertiesUtils;
 import org.gradle.util.GradleVersion;
 import org.gradle.util.internal.DistributionLocator;
 import org.gradle.util.internal.GFileUtils;
-import org.gradle.wrapper.GradleWrapperMain;
 import org.gradle.wrapper.WrapperExecutor;
 
 import javax.annotation.Nullable;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,8 +38,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.util.Locale;
 import java.util.Properties;
-
-import static java.util.Collections.singletonList;
 
 @NonNullApi
 public class WrapperGenerator {
@@ -88,22 +83,24 @@ public class WrapperGenerator {
       boolean validateDistributionUrl
   ) {
     Properties wrapperProperties = new Properties();
-    wrapperProperties.put(WrapperExecutor.DISTRIBUTION_URL_PROPERTY, distributionUrl);
+    if (distributionUrl != null) {
+      wrapperProperties.setProperty(WrapperExecutor.DISTRIBUTION_URL_PROPERTY, distributionUrl);
+    }
     if (distributionSha256Sum != null) {
-      wrapperProperties.put(WrapperExecutor.DISTRIBUTION_SHA_256_SUM, distributionSha256Sum);
+      wrapperProperties.setProperty(WrapperExecutor.DISTRIBUTION_SHA_256_SUM, distributionSha256Sum);
     }
-    wrapperProperties.put(WrapperExecutor.DISTRIBUTION_BASE_PROPERTY, distributionBase.toString());
-    wrapperProperties.put(WrapperExecutor.DISTRIBUTION_PATH_PROPERTY, distributionPath);
-    wrapperProperties.put(WrapperExecutor.ZIP_STORE_BASE_PROPERTY, archiveBase.toString());
-    wrapperProperties.put(WrapperExecutor.ZIP_STORE_PATH_PROPERTY, archivePath);
+    wrapperProperties.setProperty(WrapperExecutor.DISTRIBUTION_BASE_PROPERTY, distributionBase.toString());
+    wrapperProperties.setProperty(WrapperExecutor.DISTRIBUTION_PATH_PROPERTY, distributionPath);
+    wrapperProperties.setProperty(WrapperExecutor.ZIP_STORE_BASE_PROPERTY, archiveBase.toString());
+    wrapperProperties.setProperty(WrapperExecutor.ZIP_STORE_PATH_PROPERTY, archivePath);
     if (networkTimeout != null) {
-      wrapperProperties.put(WrapperExecutor.NETWORK_TIMEOUT_PROPERTY, String.valueOf(networkTimeout));
+      wrapperProperties.setProperty(WrapperExecutor.NETWORK_TIMEOUT_PROPERTY, String.valueOf(networkTimeout));
     }
-    wrapperProperties.put(WrapperExecutor.VALIDATE_DISTRIBUTION_URL, String.valueOf(validateDistributionUrl));
+    wrapperProperties.setProperty(WrapperExecutor.VALIDATE_DISTRIBUTION_URL, String.valueOf(validateDistributionUrl));
 
     GFileUtils.parentMkdirs(propertiesFileDestination);
-    try {
-      PropertiesUtils.store(wrapperProperties, propertiesFileDestination);
+    try (BufferedWriter writer = Files.newBufferedWriter(propertiesFileDestination.toPath())) {
+      wrapperProperties.store(writer, "Gradle wrapper properties");
     } catch (IOException e) {
       throw new UncheckedIOException(e);
     }
@@ -122,17 +119,67 @@ public class WrapperGenerator {
   }
 
   private static void writeScripts(String jarFileRelativePath, File unixScript, File batchScript) {
-    StartScriptGenerator generator = new StartScriptGenerator();
-    generator.setApplicationName("Gradle");
-    generator.setMainClassName(GradleWrapperMain.class.getName());
-    generator.setClasspath(singletonList(jarFileRelativePath));
-    generator.setOptsEnvironmentVar("GRADLE_OPTS");
-    generator.setExitEnvironmentVar("GRADLE_EXIT_CONSOLE");
-    generator.setAppNameSystemProperty("org.gradle.appname");
-    generator.setScriptRelPath(unixScript.getName());
-    generator.setDefaultJvmOpts(ImmutableList.of("-Xmx64m", "-Xms64m"));
-    generator.generateUnixScript(unixScript);
-    generator.generateWindowsScript(batchScript);
+    writeUnixScript(unixScript, jarFileRelativePath);
+    writeWindowsScript(batchScript, jarFileRelativePath);
+  }
+
+  private static void writeUnixScript(File unixScript, String jarRelativePath) {
+    GFileUtils.parentMkdirs(unixScript);
+    String script = ""
+      + "#!/bin/sh\n"
+      + "\n"
+      + "# Gradle wrapper script\n"
+      + "\n"
+      + "APP_NAME=\"Gradle\"\n"
+      + "APP_BASE_NAME=$(basename \"$0\")\n"
+      + "\n"
+      + "DEFAULT_JVM_OPTS='\"-Xmx64m\" \"-Xms64m\"'\n"
+      + "\n"
+      + "CLASSPATH=$APP_HOME/" + jarRelativePath + "\n"
+      + "\n"
+      + "if [ \"x$JAVA_HOME\" != \"x\" ]; then\n"
+      + "  JAVA_HOME=\"$JAVA_HOME\"\n"
+      + "fi\n"
+      + "\n"
+      + "if [ \"x$GRADLE_OPTS\" != \"x\" ]; then\n"
+      + "  JVM_OPTS=\"$GRADLE_OPTS\"\n"
+      + "fi\n"
+      + "\n"
+      + "exec \"$JAVA_HOME/bin/java\" $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS \"-Dorg.gradle.appname=$APP_BASE_NAME\" -classpath \"$CLASSPATH\" org.gradle.wrapper.GradleWrapperMain \"$@\"\n";
+    try {
+      Files.writeString(unixScript.toPath(), script);
+      unixScript.setExecutable(true);
+    } catch (IOException e) {
+      throw new UncheckedIOException("Failed to write unix script", e);
+    }
+  }
+
+  private static void writeWindowsScript(File batchScript, String jarRelativePath) {
+    GFileUtils.parentMkdirs(batchScript);
+    String script = ""
+      + "@rem Gradle wrapper script\n"
+      + "@if \"%DEBUG%\"==\"\" @echo off\n"
+      + "@rem Set local scope\n"
+      + "setlocal\n"
+      + "\n"
+      + "@rem Set APP_NAME and APP_BASE_NAME\n"
+      + "set APP_NAME=Gradle\n"
+      + "set APP_BASE_NAME=%~n0\n"
+      + "\n"
+      + "@rem Set CLASSPATH\n"
+      + "set CLASSPATH=%APP_HOME%\\" + jarRelativePath.replace("/", "\\") + "\n"
+      + "\n"
+      + "@rem Execute Gradle wrapper\n"
+      + "\"%JAVA_HOME%/bin/java.exe\" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %GRADLE_OPTS% \"-Dorg.gradle.appname=%APP_BASE_NAME%\" -classpath \"%CLASSPATH%\" org.gradle.wrapper.GradleWrapperMain %*\n"
+      + "\n"
+      + ":end\n"
+      + "@rem End local scope\n"
+      + "endlocal\n";
+    try {
+      Files.writeString(batchScript.toPath(), script);
+    } catch (IOException e) {
+      throw new UncheckedIOException("Failed to write windows script", e);
+    }
   }
 
 }

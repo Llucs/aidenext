@@ -51,12 +51,12 @@ tasks.register("copyJar") {
   }
 }
 
-project.tasks.getByName("jar") {
+tasks.named("jar") {
   dependsOn("deleteExistingJarFiles")
   finalizedBy("shadowJar")
 }
 
-project.tasks.getByName("shadowJar") {
+tasks.named("shadowJar") {
   finalizedBy("copyJar")
 }
 

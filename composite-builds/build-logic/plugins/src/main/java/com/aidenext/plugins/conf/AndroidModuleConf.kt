@@ -151,8 +151,8 @@ fun Project.configureAndroidModule(
       }
     }
 
-    buildTypes.getByName("debug") { isMinifyEnabled = false }
-    buildTypes.getByName("release") {
+    buildTypes.named("debug") { isMinifyEnabled = false }
+    buildTypes.named("release") {
 
       // from AGP 8.4.0 onwards, there are some behavioral changes in R8
       // enabling R8 on library projects results in missing class errors
@@ -166,7 +166,7 @@ fun Project.configureAndroidModule(
     // this build type can be used to gain release-like performance at runtime
     // the build are faster for this build type as compared to 'release'
     buildTypes.register("dev") {
-      initWith(buildTypes.getByName("release"))
+      initWith(buildTypes.named("release").get())
       isMinifyEnabled = false
     }
 

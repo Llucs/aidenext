@@ -60,31 +60,21 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Assemble ${{ matrix.build_type }} APK
         run: |
           build_type=${{ matrix.build_type }}
-          ./gradlew :core:app:assemble${build_type^}
+          ./gradlew :core:app:assemble${build_type^} --stacktrace
       - name: Copy ${{ matrix.build_type }} APK
         run: |
           cp core/app/build/outputs/apk/${{ matrix.build_type }}/app-*.apk ./
-      - name: Upload arm64-v8a ${{ matrix.build_type }} APK
+      - name: Upload universal ${{ matrix.build_type }} APK
         uses: actions/upload-artifact@v4
         with:
-          name: apk-arm64-v8a-${{ matrix.build_type }}
-          path: app-arm64-v8a-${{ matrix.build_type }}.apk
-      - name: Upload armeabi-v7a ${{ matrix.build_type }} APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: apk-armeabi-v7a-${{ matrix.build_type }}
-          path: app-armeabi-v7a-${{ matrix.build_type }}.apk
-      - name: Upload x86_64 ${{ matrix.build_type }} APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: apk-x86_64-${{ matrix.build_type }}
-          path: app-x86_64-${{ matrix.build_type }}.apk
+          name: apk-${{ matrix.build_type }}
+          path: app-*.apk
 
   run_unit_tests:
     name: Run unit tests
@@ -108,11 +98,11 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Run unit tests
-        run: ./gradlew runTestsInCI --continue
+        run: ./gradlew runTestsInCI --continue --stacktrace
         env:
           ANDROIDIDE_TEST: true
       - name: Upload test reports
@@ -144,11 +134,11 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Run tooling API tests
-        run: ./gradlew :tooling:impl:build --continue
+        run: ./gradlew :tooling:impl:build --continue --stacktrace
         env:
           ANDROIDIDE_TEST: true
           TEST_TOOLING_API_IMPL: true
@@ -184,7 +174,7 @@ jobs:
       - name: Download APKs
         uses: actions/download-artifact@v4
         with:
-          pattern: apk-*
+          pattern: apk-release
           merge-multiple: true
       - name: Change Gradle wrapper permissions
         run: chmod +x ./gradlew
@@ -194,7 +184,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Generate checksums
