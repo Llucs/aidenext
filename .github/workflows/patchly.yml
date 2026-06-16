@@ -1,0 +1,30 @@
+name: Patchly AndroidIDE Next
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+  schedule:
+    - cron: "0 3 * * 1" # toda segunda-feira 03:00
+
+  workflow_dispatch:
+
+jobs:
+  patchly:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run Patchly (Review Mode on PRs)
+        if: github.event_name == 'pull_request'
+        uses: Llucs/patchly@main
+        with:
+          mode: review
+
+      - name: Run Patchly (Weekly Scan)
+        if: github.event_name != 'pull_request'
+        uses: Llucs/patchly@main
+        with:
+          mode: scan
