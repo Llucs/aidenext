@@ -1,0 +1,54 @@
+{
+  "provider": "api",
+  "model": "deepseek-v4-flash-free",
+
+  "context_engine": {
+    "max_files": 35,
+    "include_dependencies": true,
+    "include_import_graph": true,
+    "diff_only_mode": true
+  },
+
+  "safe_mode": {
+    "enabled": true,
+    "max_file_changes": 6,
+    "require_diff_validation": true,
+    "block_destructive_changes": true
+  },
+
+  "outputs": {
+    "pr_comments": true,
+    "issues": true,
+    "patch_prs": false,
+    "reports": true
+  },
+
+  "analyzers": {
+    "code_quality": {
+      "enabled": true
+    },
+    "architecture": {
+      "enabled": true
+    },
+    "performance": {
+      "enabled": true
+    },
+    "modernization": {
+      "enabled": false
+    },
+    "security": {
+      "enabled": true
+    }
+  },
+
+  "ollama": {
+    "model": "qwen3-coder:30b",
+    "quantization": "q3_k_m",
+    "gpu_layers": "auto",
+    "context_length": 32000,
+    "flash_attention": true,
+    "kv_cache_type": "q8_0",
+    "num_thread": 4,
+    "batch_size": 1024
+  }
+}
