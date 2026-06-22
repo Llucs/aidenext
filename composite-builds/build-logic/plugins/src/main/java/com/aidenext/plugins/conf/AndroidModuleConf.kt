@@ -126,7 +126,7 @@ private fun Project.configureAppModule(
 
     buildTypes.named("debug") { isMinifyEnabled = false }
     buildTypes.named("release") {
-      isMinifyEnabled = isAppModule
+      isMinifyEnabled = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
     buildTypes.register("dev") {
