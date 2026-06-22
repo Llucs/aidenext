@@ -25,9 +25,9 @@ subprojects {
   plugins.withId("com.android.library") {
     extensions.configure<com.android.build.api.dsl.LibraryExtension> {
       compileSdk = 34
-      targetSdk = 28
 
       defaultConfig {
+        targetSdk = 28
         minSdk = 26
       }
 
