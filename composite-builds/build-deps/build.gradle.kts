@@ -15,8 +15,6 @@
  *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import com.android.build.gradle.BaseExtension
-
 plugins {
   alias(libs.plugins.android.application) apply false
   alias(libs.plugins.android.library) apply false
@@ -25,12 +23,11 @@ plugins {
 
 subprojects {
   plugins.withId("com.android.library") {
-    extensions.getByType(BaseExtension::class.java).apply {
-      compileSdkVersion(34)
+    extensions.configure<com.android.build.api.dsl.LibraryExtension> {
+      compileSdk = 34
 
       defaultConfig {
         minSdk = 26
-        //noinspection ExpiredTargetSdkVersion
         targetSdk = 28
       }
 

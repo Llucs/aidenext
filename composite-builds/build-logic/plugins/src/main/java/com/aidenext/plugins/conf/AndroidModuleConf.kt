@@ -34,15 +34,6 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.provider.Provider
 
-/**
- * ABIs for which the product flavors will be created.
- * The keys in this map are the names of the product flavors whereas,
- * the value for each flavor is a number that will be incremented to the base version code of the IDE
- * and set as the version code of that flavor.
- *
- * For example, if the base version code of the IDE is 270 (for v2.7.0), then for arm64-v8a
- * flavor, the version code will be `100 * 270 + 1` i.e. `27001`
- */
 internal val flavorsAbis = mapOf("armeabi-v7a" to 1, "arm64-v8a" to 2, "x86_64" to 3)
 
 fun Project.configureAndroidModule(
@@ -64,14 +55,81 @@ fun Project.configureAndroidModule(
     androidJar.copyTo(frameworkStubsJar)
   }
 
-  val androidExt = if (isAppModule) {
-    extensions.getByType(ApplicationExtension::class.java)
-  } else {
-    extensions.getByType(LibraryExtension::class.java)
-  }
+  if (isAppModule) {
+    extensions.configure<ApplicationExtension> {
+      configureCommon(this@configureAndroidModule, this, coreLibDesugDep, isAppModule)
 
-  androidExt.apply {
-    packagingOptions {
+      defaultConfig {
+        minSdk = BuildConfig.minSdk
+        targetSdk = BuildConfig.targetSdk
+        versionCode = projectVersionCode
+        versionName = rootProject.version.toString().removePrefix("v")
+        multiDexEnabled = true
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+      }
+
+      if (project.plugins.hasPlugin("com.aidenext.core-app")) {
+        packaging {
+          jniLibs {
+            useLegacyPackaging = true
+          }
+        }
+
+        extensions.getByType(ApplicationAndroidComponentsExtension::class.java).apply {
+          onVariants { variant ->
+            variant.outputs.forEach { output ->
+              val verCodeIncr = flavorsAbis[output.getFilter(
+                FilterConfiguration.FilterType.ABI
+              )?.identifier]
+                ?: throw UnsupportedOperationException("Universal APKs are not supported!")
+              output.versionCode.set(100 * projectVersionCode + verCodeIncr)
+            }
+          }
+        }
+      }
+    }
+  } else {
+    extensions.configure<LibraryExtension> {
+      compileSdk = BuildConfig.compileSdk
+
+      packaging {
+        resources {
+          excludes += listOf(
+            "META-INF/CHANGES",
+            "META-INF/README.md",
+          )
+          pickFirsts += listOf(
+            "META-INF/eclipse.inf",
+            "META-INF/LICENSE.md",
+            "META-INF/AL2.0",
+            "META-INF/LGPL2.1",
+            "META-INF/INDEX.LIST",
+            "about_files/LICENSE-2.0.txt",
+            "plugin.xml",
+            "plugin.properties",
+            "about.mappings",
+            "about.properties",
+            "about.ini",
+            "modeling32.png"
+          )
+        }
+      }
+
+      configureCommonLib(this@configureAndroidModule, this, coreLibDesugDep)
+    }
+  }
+}
+
+private fun Project.configureCommon(
+  project: Project,
+  extension: CommonExtension,
+  coreLibDesugDep: Provider<MinimalExternalModuleDependency>,
+  isAppModule: Boolean
+) {
+  extension.compileSdk = BuildConfig.compileSdk
+
+  extension.packaging {
+    resources {
       excludes += listOf(
         "META-INF/CHANGES",
         "META-INF/README.md",
@@ -93,99 +151,60 @@ fun Project.configureAndroidModule(
     }
   }
 
-  androidExt.run {
-    compileSdkVersion(BuildConfig.compileSdk)
-
-    defaultConfig {
-      minSdk = BuildConfig.minSdk
-      targetSdk = BuildConfig.targetSdk
-      versionCode = projectVersionCode
-      versionName = rootProject.version.toString().removePrefix("v")
-
-      // required
-      multiDexEnabled = true
-
-      testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    compileOptions {
-      sourceCompatibility = BuildConfig.javaVersion
-      targetCompatibility = BuildConfig.javaVersion
-    }
-
-    configureCoreLibDesugaring(this, coreLibDesugDep)
-
-    if (project.plugins.hasPlugin("com.aidenext.core-app")) {
-      packagingOptions {
-        jniLibs {
-          useLegacyPackaging = true
-        }
-      }
-
-      splits {
-        abi {
-          reset()
-          isEnable = true
-          isUniversalApk = false
-          if (isFDroidBuild) {
-            include(FDroidConfig.fDroidBuildArch!!)
-          } else {
-            include(*flavorsAbis.keys.toTypedArray())
-          }
-        }
-      }
-
-      extensions.getByType(ApplicationAndroidComponentsExtension::class.java).apply {
-        onVariants { variant ->
-          variant.outputs.forEach { output ->
-
-            // version code increment
-            val verCodeIncr = flavorsAbis[output.getFilter(
-              FilterConfiguration.FilterType.ABI
-            )?.identifier]
-              ?: throw UnsupportedOperationException("Universal APKs are not supported!")
-
-            output.versionCode.set(100 * projectVersionCode + verCodeIncr)
-          }
-        }
-      }
-    } else {
-      defaultConfig {
-        ndk {
-          abiFilters.clear()
-          abiFilters += flavorsAbis.keys
-        }
-      }
-    }
-
-    buildTypes.named("debug") { isMinifyEnabled = false }
-    buildTypes.named("release") {
-
-      // from AGP 8.4.0 onwards, there are some behavioral changes in R8
-      // enabling R8 on library projects results in missing class errors
-      // see https://issuetracker.google.com/issues/338411137#comment11
-      isMinifyEnabled = isAppModule
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-    }
-
-    // development build type
-    // similar to 'release', but disables proguard/r8
-    // this build type can be used to gain release-like performance at runtime
-    // the build are faster for this build type as compared to 'release'
-    buildTypes.register("dev") {
-      initWith(buildTypes.named("release").get())
-      isMinifyEnabled = false
-    }
-
-    testOptions { unitTests.isIncludeAndroidResources = true }
-
-    buildFeatures.viewBinding = true
-    buildFeatures.buildConfig = true
+  extension.compileOptions {
+    sourceCompatibility = BuildConfig.javaVersion
+    targetCompatibility = BuildConfig.javaVersion
   }
+
+  configureCoreLibDesugaring(project, extension, coreLibDesugDep)
+
+  extension.buildTypes.named("debug") { isMinifyEnabled = false }
+  extension.buildTypes.named("release") {
+    isMinifyEnabled = isAppModule
+    proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+  }
+  extension.buildTypes.register("dev") {
+    initWith(buildTypes.named("release").get())
+    isMinifyEnabled = false
+  }
+
+  extension.testOptions { unitTests.isIncludeAndroidResources = true }
+
+  extension.buildFeatures.viewBinding = true
+  extension.buildFeatures.buildConfig = true
+}
+
+private fun Project.configureCommonLib(
+  project: Project,
+  extension: LibraryExtension,
+  coreLibDesugDep: Provider<MinimalExternalModuleDependency>
+) {
+  extension.compileOptions {
+    sourceCompatibility = BuildConfig.javaVersion
+    targetCompatibility = BuildConfig.javaVersion
+  }
+
+  configureCoreLibDesugaring(project, extension, coreLibDesugDep)
+
+  extension.buildTypes.named("debug") { isMinifyEnabled = false }
+  extension.buildTypes.named("release") {
+    isMinifyEnabled = false
+    proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+  }
+  extension.buildTypes.register("dev") {
+    initWith(buildTypes.named("release").get())
+    isMinifyEnabled = false
+  }
+
+  extension.testOptions { unitTests.isIncludeAndroidResources = true }
+
+  extension.buildFeatures.viewBinding = true
+  extension.buildFeatures.buildConfig = true
 }
 
 private fun Project.configureCoreLibDesugaring(
-  baseExtension: CommonExtension<*, *, *, *, *>,
+  project: Project,
+  baseExtension: CommonExtension,
   coreLibDesugDep: Provider<MinimalExternalModuleDependency>
 ) {
   val coreLibDesugaringEnabled = !project.plugins.hasPlugin(NoDesugarPlugin::class.java)
