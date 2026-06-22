@@ -25,8 +25,6 @@ import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.FilterConfiguration
 import com.android.build.api.variant.impl.getFilter
 import com.aidenext.build.config.BuildConfig
-import com.aidenext.build.config.FDroidConfig
-import com.aidenext.build.config.isFDroidBuild
 import com.aidenext.build.config.projectVersionCode
 import com.aidenext.plugins.NoDesugarPlugin
 import com.aidenext.plugins.util.SdkUtils.getAndroidJar
@@ -56,162 +54,138 @@ fun Project.configureAndroidModule(
   }
 
   if (isAppModule) {
-    extensions.configure<ApplicationExtension> {
-      configureCommon(this@configureAndroidModule, this, coreLibDesugDep, isAppModule)
-
-      defaultConfig {
-        minSdk = BuildConfig.minSdk
-        targetSdk = BuildConfig.targetSdk
-        versionCode = projectVersionCode
-        versionName = rootProject.version.toString().removePrefix("v")
-        multiDexEnabled = true
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-      }
-
-      if (project.plugins.hasPlugin("com.aidenext.core-app")) {
-        packaging {
-          jniLibs {
-            useLegacyPackaging = true
-          }
-        }
-
-        extensions.getByType(ApplicationAndroidComponentsExtension::class.java).apply {
-          onVariants { variant ->
-            variant.outputs.forEach { output ->
-              val verCodeIncr = flavorsAbis[output.getFilter(
-                FilterConfiguration.FilterType.ABI
-              )?.identifier]
-                ?: throw UnsupportedOperationException("Universal APKs are not supported!")
-              output.versionCode.set(100 * projectVersionCode + verCodeIncr)
-            }
-          }
-        }
-      }
-    }
+    configureAppModule(coreLibDesugDep)
   } else {
-    extensions.configure<LibraryExtension> {
-      compileSdk = BuildConfig.compileSdk
+    configureLibraryModule(coreLibDesugDep)
+  }
+}
 
-      packaging {
-        resources {
-          excludes += listOf(
-            "META-INF/CHANGES",
-            "META-INF/README.md",
-          )
-          pickFirsts += listOf(
-            "META-INF/eclipse.inf",
-            "META-INF/LICENSE.md",
-            "META-INF/AL2.0",
-            "META-INF/LGPL2.1",
-            "META-INF/INDEX.LIST",
-            "about_files/LICENSE-2.0.txt",
-            "plugin.xml",
-            "plugin.properties",
-            "about.mappings",
-            "about.properties",
-            "about.ini",
-            "modeling32.png"
-          )
+private fun Project.configureAppModule(
+  coreLibDesugDep: Provider<MinimalExternalModuleDependency>
+) {
+  extensions.getByType(ApplicationExtension::class.java).apply {
+    compileSdk = BuildConfig.compileSdk
+
+    packaging.resources.excludes = listOf(
+      "META-INF/CHANGES",
+      "META-INF/README.md",
+    )
+    packaging.resources.pickFirsts = listOf(
+      "META-INF/eclipse.inf",
+      "META-INF/LICENSE.md",
+      "META-INF/AL2.0",
+      "META-INF/LGPL2.1",
+      "META-INF/INDEX.LIST",
+      "about_files/LICENSE-2.0.txt",
+      "plugin.xml",
+      "plugin.properties",
+      "about.mappings",
+      "about.properties",
+      "about.ini",
+      "modeling32.png"
+    )
+
+    defaultConfig {
+      minSdk = BuildConfig.minSdk
+      targetSdk = BuildConfig.targetSdk
+      versionCode = projectVersionCode
+      versionName = rootProject.version.toString().removePrefix("v")
+      multiDexEnabled = true
+      testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions.sourceCompatibility = BuildConfig.javaVersion
+    compileOptions.targetCompatibility = BuildConfig.javaVersion
+
+    this@configureAppModule.configureDesugaring(this, coreLibDesugDep)
+
+    if (project.plugins.hasPlugin("com.aidenext.core-app")) {
+      packaging.jniLibs.useLegacyPackaging = true
+
+      extensions.getByType(ApplicationAndroidComponentsExtension::class.java).apply {
+        onVariants { variant ->
+          variant.outputs.forEach { output ->
+            val verCodeIncr = flavorsAbis[output.getFilter(
+              FilterConfiguration.FilterType.ABI
+            )?.identifier]
+              ?: throw UnsupportedOperationException("Universal APKs are not supported!")
+            output.versionCode.set(100 * projectVersionCode + verCodeIncr)
+          }
         }
       }
-
-      configureCommonLib(this@configureAndroidModule, this, coreLibDesugDep)
     }
+
+    buildTypes.named("debug") { isMinifyEnabled = false }
+    buildTypes.named("release") {
+      isMinifyEnabled = true
+      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    }
+    buildTypes.register("dev") {
+      initWith(buildTypes.named("release").get())
+      isMinifyEnabled = false
+    }
+
+    testOptions.unitTests.isIncludeAndroidResources = true
+
+    buildFeatures.viewBinding = true
+    buildFeatures.buildConfig = true
   }
 }
 
-private fun Project.configureCommon(
-  project: Project,
+private fun Project.configureLibraryModule(
+  coreLibDesugDep: Provider<MinimalExternalModuleDependency>
+) {
+  extensions.getByType(LibraryExtension::class.java).apply {
+    compileSdk = BuildConfig.compileSdk
+
+    packaging.resources.excludes = listOf(
+      "META-INF/CHANGES",
+      "META-INF/README.md",
+    )
+    packaging.resources.pickFirsts = listOf(
+      "META-INF/eclipse.inf",
+      "META-INF/LICENSE.md",
+      "META-INF/AL2.0",
+      "META-INF/LGPL2.1",
+      "META-INF/INDEX.LIST",
+      "about_files/LICENSE-2.0.txt",
+      "plugin.xml",
+      "plugin.properties",
+      "about.mappings",
+      "about.properties",
+      "about.ini",
+      "modeling32.png"
+    )
+
+    compileOptions.sourceCompatibility = BuildConfig.javaVersion
+    compileOptions.targetCompatibility = BuildConfig.javaVersion
+
+    this@configureLibraryModule.configureDesugaring(this, coreLibDesugDep)
+
+    buildTypes.named("debug") { isMinifyEnabled = false }
+    buildTypes.named("release") {
+      isMinifyEnabled = false
+      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    }
+    buildTypes.register("dev") {
+      initWith(buildTypes.named("release").get())
+      isMinifyEnabled = false
+    }
+
+    testOptions.unitTests.isIncludeAndroidResources = true
+
+    buildFeatures.viewBinding = true
+    buildFeatures.buildConfig = true
+  }
+}
+
+private fun Project.configureDesugaring(
   extension: CommonExtension,
-  coreLibDesugDep: Provider<MinimalExternalModuleDependency>,
-  isAppModule: Boolean
-) {
-  extension.compileSdk = BuildConfig.compileSdk
-
-  extension.packaging {
-    resources {
-      excludes += listOf(
-        "META-INF/CHANGES",
-        "META-INF/README.md",
-      )
-      pickFirsts += listOf(
-        "META-INF/eclipse.inf",
-        "META-INF/LICENSE.md",
-        "META-INF/AL2.0",
-        "META-INF/LGPL2.1",
-        "META-INF/INDEX.LIST",
-        "about_files/LICENSE-2.0.txt",
-        "plugin.xml",
-        "plugin.properties",
-        "about.mappings",
-        "about.properties",
-        "about.ini",
-        "modeling32.png"
-      )
-    }
-  }
-
-  extension.compileOptions {
-    sourceCompatibility = BuildConfig.javaVersion
-    targetCompatibility = BuildConfig.javaVersion
-  }
-
-  configureCoreLibDesugaring(project, extension, coreLibDesugDep)
-
-  extension.buildTypes.named("debug") { isMinifyEnabled = false }
-  extension.buildTypes.named("release") {
-    isMinifyEnabled = isAppModule
-    proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-  }
-  extension.buildTypes.register("dev") {
-    initWith(buildTypes.named("release").get())
-    isMinifyEnabled = false
-  }
-
-  extension.testOptions { unitTests.isIncludeAndroidResources = true }
-
-  extension.buildFeatures.viewBinding = true
-  extension.buildFeatures.buildConfig = true
-}
-
-private fun Project.configureCommonLib(
-  project: Project,
-  extension: LibraryExtension,
   coreLibDesugDep: Provider<MinimalExternalModuleDependency>
 ) {
-  extension.compileOptions {
-    sourceCompatibility = BuildConfig.javaVersion
-    targetCompatibility = BuildConfig.javaVersion
-  }
-
-  configureCoreLibDesugaring(project, extension, coreLibDesugDep)
-
-  extension.buildTypes.named("debug") { isMinifyEnabled = false }
-  extension.buildTypes.named("release") {
-    isMinifyEnabled = false
-    proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-  }
-  extension.buildTypes.register("dev") {
-    initWith(buildTypes.named("release").get())
-    isMinifyEnabled = false
-  }
-
-  extension.testOptions { unitTests.isIncludeAndroidResources = true }
-
-  extension.buildFeatures.viewBinding = true
-  extension.buildFeatures.buildConfig = true
-}
-
-private fun Project.configureCoreLibDesugaring(
-  project: Project,
-  baseExtension: CommonExtension,
-  coreLibDesugDep: Provider<MinimalExternalModuleDependency>
-) {
-  val coreLibDesugaringEnabled = !project.plugins.hasPlugin(NoDesugarPlugin::class.java)
-
-  baseExtension.compileOptions.isCoreLibraryDesugaringEnabled = coreLibDesugaringEnabled
-
-  if (coreLibDesugaringEnabled) {
-    project.dependencies.add("coreLibraryDesugaring", coreLibDesugDep)
+  val enabled = !plugins.hasPlugin(NoDesugarPlugin::class.java)
+  extension.compileOptions.isCoreLibraryDesugaringEnabled = enabled
+  if (enabled) {
+    dependencies.add("coreLibraryDesugaring", coreLibDesugDep)
   }
 }
