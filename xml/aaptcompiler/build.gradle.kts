@@ -21,6 +21,7 @@ import com.aidenext.build.config.BuildConfig
 
 plugins {
     id("com.android.library")
+    id("kotlin-android")
 }
 
 android {
