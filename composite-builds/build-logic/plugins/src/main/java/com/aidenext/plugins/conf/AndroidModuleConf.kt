@@ -169,6 +169,10 @@ private fun Project.configureLibraryModule(
     compileOptions.sourceCompatibility = BuildConfig.javaVersion
     compileOptions.targetCompatibility = BuildConfig.javaVersion
 
+    defaultConfig {
+      multiDexEnabled = true
+    }
+
     this@configureLibraryModule.configureDesugaring(this, coreLibDesugDep)
 
     buildTypes.named("debug") { isMinifyEnabled = false }
