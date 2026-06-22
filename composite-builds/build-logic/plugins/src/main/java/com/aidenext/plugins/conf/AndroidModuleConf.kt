@@ -55,37 +55,37 @@ fun Project.configureAndroidModule(
     androidJar.copyTo(frameworkStubsJar)
   }
 
-  val androidExt = if (isAppModule) {
-    extensions.getByType(ApplicationExtension::class.java)
+  if (isAppModule) {
+    configureAppModule(coreLibDesugDep)
   } else {
-    extensions.getByType(LibraryExtension::class.java)
+    configureLibraryModule(coreLibDesugDep)
   }
+}
 
-  androidExt.apply {
-    packagingOptions {
-      excludes += listOf(
-        "META-INF/CHANGES",
-        "META-INF/README.md",
-      )
-      pickFirsts += listOf(
-        "META-INF/eclipse.inf",
-        "META-INF/LICENSE.md",
-        "META-INF/AL2.0",
-        "META-INF/LGPL2.1",
-        "META-INF/INDEX.LIST",
-        "about_files/LICENSE-2.0.txt",
-        "plugin.xml",
-        "plugin.properties",
-        "about.mappings",
-        "about.properties",
-        "about.ini",
-        "modeling32.png"
-      )
-    }
-  }
+private fun Project.configureAppModule(
+  coreLibDesugDep: Provider<MinimalExternalModuleDependency>
+) {
+  extensions.getByType(ApplicationExtension::class.java).apply {
+    compileSdk = BuildConfig.compileSdk
 
-  androidExt.run {
-    compileSdkVersion(BuildConfig.compileSdk)
+    packaging.resources.excludes += listOf(
+      "META-INF/CHANGES",
+      "META-INF/README.md",
+    )
+    packaging.resources.pickFirsts += listOf(
+      "META-INF/eclipse.inf",
+      "META-INF/LICENSE.md",
+      "META-INF/AL2.0",
+      "META-INF/LGPL2.1",
+      "META-INF/INDEX.LIST",
+      "about_files/LICENSE-2.0.txt",
+      "plugin.xml",
+      "plugin.properties",
+      "about.mappings",
+      "about.properties",
+      "about.ini",
+      "modeling32.png"
+    )
 
     defaultConfig {
       minSdk = BuildConfig.minSdk
@@ -96,32 +96,13 @@ fun Project.configureAndroidModule(
       testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    compileOptions {
-      sourceCompatibility = BuildConfig.javaVersion
-      targetCompatibility = BuildConfig.javaVersion
-    }
+    compileOptions.sourceCompatibility = BuildConfig.javaVersion
+    compileOptions.targetCompatibility = BuildConfig.javaVersion
 
-    configureCoreLibDesugaring(this, coreLibDesugDep)
+    this@configureAppModule.configureDesugaring(this, coreLibDesugDep)
 
     if (project.plugins.hasPlugin("com.aidenext.core-app")) {
-      packagingOptions {
-        jniLibs {
-          useLegacyPackaging = true
-        }
-      }
-
-      splits {
-        abi {
-          reset()
-          isEnable = true
-          isUniversalApk = false
-          if (isFDroidBuild) {
-            include(FDroidConfig.fDroidBuildArch!!)
-          } else {
-            include(*flavorsAbis.keys.toTypedArray())
-          }
-        }
-      }
+      packaging.jniLibs.useLegacyPackaging = true
 
       extensions.getByType(ApplicationAndroidComponentsExtension::class.java).apply {
         onVariants { variant ->
@@ -153,22 +134,67 @@ fun Project.configureAndroidModule(
       isMinifyEnabled = false
     }
 
-    testOptions { unitTests.isIncludeAndroidResources = true }
+    testOptions.unitTests.isIncludeAndroidResources = true
 
     buildFeatures.viewBinding = true
     buildFeatures.buildConfig = true
   }
 }
 
-private fun Project.configureCoreLibDesugaring(
-  baseExtension: CommonExtension<*, *, *, *, *>,
+private fun Project.configureLibraryModule(
   coreLibDesugDep: Provider<MinimalExternalModuleDependency>
 ) {
-  val coreLibDesugaringEnabled = !project.plugins.hasPlugin(NoDesugarPlugin::class.java)
+  extensions.getByType(LibraryExtension::class.java).apply {
+    compileSdk = BuildConfig.compileSdk
 
-  baseExtension.compileOptions.isCoreLibraryDesugaringEnabled = coreLibDesugaringEnabled
+    packaging.resources.excludes += listOf(
+      "META-INF/CHANGES",
+      "META-INF/README.md",
+    )
+    packaging.resources.pickFirsts += listOf(
+      "META-INF/eclipse.inf",
+      "META-INF/LICENSE.md",
+      "META-INF/AL2.0",
+      "META-INF/LGPL2.1",
+      "META-INF/INDEX.LIST",
+      "about_files/LICENSE-2.0.txt",
+      "plugin.xml",
+      "plugin.properties",
+      "about.mappings",
+      "about.properties",
+      "about.ini",
+      "modeling32.png"
+    )
 
-  if (coreLibDesugaringEnabled) {
-    project.dependencies.add("coreLibraryDesugaring", coreLibDesugDep)
+    compileOptions.sourceCompatibility = BuildConfig.javaVersion
+    compileOptions.targetCompatibility = BuildConfig.javaVersion
+
+    this@configureLibraryModule.configureDesugaring(this, coreLibDesugDep)
+
+    buildTypes.named("debug") { isMinifyEnabled = false }
+    buildTypes.named("release") {
+      isMinifyEnabled = false
+      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    }
+    buildTypes.register("dev") {
+      initWith(buildTypes.named("release").get())
+      isMinifyEnabled = false
+    }
+
+    testOptions.unitTests.isIncludeAndroidResources = true
+
+    buildFeatures.viewBinding = true
+    buildFeatures.buildConfig = true
+  }
+}
+
+private fun Project.configureDesugaring(
+  extension: CommonExtension,
+  coreLibDesugDep: Provider<MinimalExternalModuleDependency>
+) {
+  val enabled = !plugins.hasPlugin(NoDesugarPlugin::class.java)
+  extension.compileOptions.isCoreLibraryDesugaringEnabled = enabled
+  if (enabled) {
+    dependencies.add("coreLibraryDesugaring", coreLibDesugDep)
   }
 }
