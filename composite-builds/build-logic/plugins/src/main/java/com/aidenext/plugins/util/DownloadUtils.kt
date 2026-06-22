@@ -22,6 +22,7 @@ import org.gradle.api.logging.Logger
 import java.io.File
 import java.math.BigInteger
 import java.net.HttpURLConnection
+import java.net.URI
 import java.net.URL
 import java.security.DigestInputStream
 import java.security.MessageDigest
