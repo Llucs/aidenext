@@ -66,11 +66,11 @@ private fun Project.configureAppModule(
   extensions.getByType(ApplicationExtension::class.java).apply {
     compileSdk = BuildConfig.compileSdk
 
-    packaging.resources.excludes = listOf(
+    packaging.resources.excludes += listOf(
       "META-INF/CHANGES",
       "META-INF/README.md",
     )
-    packaging.resources.pickFirsts = listOf(
+    packaging.resources.pickFirsts += listOf(
       "META-INF/eclipse.inf",
       "META-INF/LICENSE.md",
       "META-INF/AL2.0",
@@ -138,11 +138,11 @@ private fun Project.configureLibraryModule(
   extensions.getByType(LibraryExtension::class.java).apply {
     compileSdk = BuildConfig.compileSdk
 
-    packaging.resources.excludes = listOf(
+    packaging.resources.excludes += listOf(
       "META-INF/CHANGES",
       "META-INF/README.md",
     )
-    packaging.resources.pickFirsts = listOf(
+    packaging.resources.pickFirsts += listOf(
       "META-INF/eclipse.inf",
       "META-INF/LICENSE.md",
       "META-INF/AL2.0",
