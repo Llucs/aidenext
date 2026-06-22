@@ -69,7 +69,7 @@ object DownloadUtils {
 
     file.parentFile.mkdirs()
 
-    val connection = URL(remoteUrl).openConnection() as HttpURLConnection
+    val connection = URI(remoteUrl).toURL().openConnection() as HttpURLConnection
     connection.instanceFollowRedirects = true
 
     file.outputStream().buffered().use { out ->
