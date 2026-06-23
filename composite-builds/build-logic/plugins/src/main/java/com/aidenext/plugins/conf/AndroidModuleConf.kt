@@ -18,9 +18,9 @@
 package com.aidenext.plugins.conf
 
 import com.android.build.api.dsl.ApplicationExtension
-import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.AndroidComponentsExtension
+import com.android.build.gradle.BaseExtension
 import com.aidenext.build.config.BuildConfig
 import com.aidenext.build.config.FDroidConfig
 import com.aidenext.build.config.isFDroidBuild
@@ -96,7 +96,7 @@ private fun Project.configureAppModule(
     compileOptions.sourceCompatibility = BuildConfig.javaVersion
     compileOptions.targetCompatibility = BuildConfig.javaVersion
 
-    this@configureAppModule.configureDesugaring(this, coreLibDesugDep)
+    this@configureAppModule.configureDesugaring(this as BaseExtension, coreLibDesugDep)
 
     if (project.plugins.hasPlugin("com.aidenext.core-app")) {
       packaging.jniLibs.useLegacyPackaging = true
@@ -158,7 +158,7 @@ private fun Project.configureLibraryModule(
       multiDexEnabled = true
     }
 
-    this@configureLibraryModule.configureDesugaring(this, coreLibDesugDep)
+    this@configureLibraryModule.configureDesugaring(this as BaseExtension, coreLibDesugDep)
 
     buildTypes.named("debug") { isMinifyEnabled = false }
     buildTypes.named("release") {
@@ -178,7 +178,7 @@ private fun Project.configureLibraryModule(
 }
 
 private fun Project.configureDesugaring(
-  extension: CommonExtension,
+  extension: BaseExtension,
   coreLibDesugDep: Provider<MinimalExternalModuleDependency>
 ) {
   val enabled = !plugins.hasPlugin(NoDesugarPlugin::class.java)
