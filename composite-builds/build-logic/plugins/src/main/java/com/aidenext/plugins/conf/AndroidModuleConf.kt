@@ -21,8 +21,6 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.AndroidComponentsExtension
-import com.android.build.api.variant.FilterConfiguration
-import com.android.build.api.variant.impl.getFilter
 import com.aidenext.build.config.BuildConfig
 import com.aidenext.build.config.FDroidConfig
 import com.aidenext.build.config.isFDroidBuild
@@ -102,18 +100,6 @@ private fun Project.configureAppModule(
 
     if (project.plugins.hasPlugin("com.aidenext.core-app")) {
       packaging.jniLibs.useLegacyPackaging = true
-
-      extensions.getByType(AndroidComponentsExtension::class.java).apply {
-        onVariants { variant ->
-          variant.outputs.forEach { output ->
-            val verCodeIncr = flavorsAbis[output.getFilter(
-              FilterConfiguration.FilterType.ABI
-            )?.identifier]
-              ?: throw UnsupportedOperationException("Universal APKs are not supported!")
-            output.versionCode.set(100 * projectVersionCode + verCodeIncr)
-          }
-        }
-      }
     } else {
       defaultConfig {
         ndk {
