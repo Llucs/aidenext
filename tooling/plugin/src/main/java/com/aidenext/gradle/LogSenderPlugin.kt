@@ -21,6 +21,7 @@ import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.ApplicationVariant
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ExternalModuleDependency
 import org.gradle.api.logging.Logging
 
@@ -89,9 +90,7 @@ class LogSenderPlugin : Plugin<Project> {
             )
 
             logger.debug("Adding logsender dependency: $logsenderDependency")
-            variant.runtimeConfiguration?.let { config ->
-              config.dependencies.add(logsenderDependency)
-            }
+            project.dependencies.add(variant.name + "RuntimeClasspath", logsenderDependency)
           }
         }
       }
