@@ -71,7 +71,7 @@ jobs:
             SDKMANAGER=$ANDROID_SDK_ROOT/tools/bin/sdkmanager
           fi
           if [ -f "$SDKMANAGER" ]; then
-            yes | $SDKMANAGER --sdk_root=$ANDROID_SDK_ROOT "platforms;android-34" || true
+            yes | $SDKMANAGER --sdk_root=$ANDROID_SDK_ROOT "platforms;android-33" || true
           fi
           echo "Installed platforms:"
           ls $ANDROID_SDK_ROOT/platforms/ 2>/dev/null || echo "No platforms dir"
