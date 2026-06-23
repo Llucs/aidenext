@@ -24,6 +24,7 @@ import com.aidenext.plugins.AndroidIDEAssetsPlugin
 plugins {
   id("com.aidenext.core-app")
   id("com.android.application")
+  id("kotlin-android")
   id("kotlin-kapt")
   id("kotlin-parcelize")
   id("androidx.navigation.safeargs.kotlin")
