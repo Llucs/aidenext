@@ -5,11 +5,11 @@ import org.gradle.api.JavaVersion
 object BuildConfig {
   const val packageName = "com.aidenext"
 
-  const val compileSdk = 33
+  const val compileSdk = 35
 
   const val minSdk = 26
 
-  const val targetSdk = 33
+  const val targetSdk = 35
 
   const val ndkVersion = "27.0.12077973"
 

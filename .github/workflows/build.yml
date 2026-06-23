@@ -63,16 +63,22 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: Install compatible Android SDK platform
+      - name: Install latest cmdline-tools and Android SDK platform
         run: |
           export ANDROID_SDK_ROOT=$ANDROID_HOME
-          SDKMANAGER=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager
-          if [ ! -f "$SDKMANAGER" ]; then
-            SDKMANAGER=$ANDROID_SDK_ROOT/tools/bin/sdkmanager
+          CMDLINE_TOOLS_ZIP=/tmp/cmdline-tools.zip
+          CMDLINE_TOOLS_DIR=$ANDROID_SDK_ROOT/cmdline-tools/latest
+          if [ ! -f "$CMDLINE_TOOLS_DIR/bin/sdkmanager" ]; then
+            echo "Downloading latest cmdline-tools..."
+            curl -fsSL -o "$CMDLINE_TOOLS_ZIP" \
+              "https://dl.google.com/android/repository/commandlinetools-linux-12209519_latest.zip"
+            mkdir -p "$CMDLINE_TOOLS_DIR"
+            unzip -q "$CMDLINE_TOOLS_ZIP" -d /tmp/cmdline-tools-tmp
+            mv /tmp/cmdline-tools-tmp/cmdline-tools/* "$CMDLINE_TOOLS_DIR/"
+            rm -rf /tmp/cmdline-tools-tmp "$CMDLINE_TOOLS_ZIP"
           fi
-          if [ -f "$SDKMANAGER" ]; then
-            yes | $SDKMANAGER --sdk_root=$ANDROID_SDK_ROOT "platforms;android-33" || true
-          fi
+          yes | $CMDLINE_TOOLS_DIR/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT \
+            "platforms;android-35" "build-tools;36.0.0" || true
           echo "Installed platforms:"
           ls $ANDROID_SDK_ROOT/platforms/ 2>/dev/null || echo "No platforms dir"
       - name: Assemble ${{ matrix.build_type }} APK
@@ -113,6 +119,11 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+      - name: Install Android SDK platform
+        run: |
+          export ANDROID_SDK_ROOT=$ANDROID_HOME
+          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager \
+            --sdk_root=$ANDROID_SDK_ROOT "platforms;android-35" || true
       - name: Run unit tests
         run: ./gradlew runTestsInCI --continue --stacktrace
         env:
@@ -149,6 +160,11 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+      - name: Install Android SDK platform
+        run: |
+          export ANDROID_SDK_ROOT=$ANDROID_HOME
+          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager \
+            --sdk_root=$ANDROID_SDK_ROOT "platforms;android-35" || true
       - name: Run tooling API tests
         run: ./gradlew :tooling:impl:build --continue --stacktrace
         env:
