@@ -26,5 +26,7 @@ import org.gradle.api.Project
  * @author Akash Yadav
  */
 class AndroidIDECoreAppPlugin : Plugin<Project> {
-  override fun apply(target: Project) {}
+  override fun apply(target: Project) {
+    target.plugins.apply("org.jetbrains.kotlin.android")
+  }
 }
