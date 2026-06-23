@@ -48,8 +48,7 @@ class DefaultAndroidArtifact : AndroidArtifact, Serializable {
   override var modelSyncFiles: Collection<Void> = emptyList()
   override var desugaredMethodsFiles: Collection<File> = emptyList()
   override var generatedAssetsFolders: Collection<File> = emptyList()
-  override var mappingR8TextFile: File? = null
-  override var mappingR8PartitionFile: File? = null
+  override var privacySandboxSdkInfo: Void? = null
   override val generatedClassPaths: Map<String, File> = emptyMap()
   override val bytecodeTransformations: Collection<BytecodeTransformation> = emptyList()
 }
