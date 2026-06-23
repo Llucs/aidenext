@@ -56,13 +56,8 @@ tasks.named("jar") {
   finalizedBy("shadowJar")
 }
 
-tasks.named("shadowJar") {
+tasks.named("shadowJar", io.github.goooler.shadow.tasks.ShadowJar::class) {
   finalizedBy("copyJar")
-  mergeServiceFiles()
-  exclude("META-INF/maven/**")
-  exclude("META-INF/*.SF")
-  exclude("META-INF/*.DSA")
-  exclude("META-INF/*.RSA")
 }
 
 dependencies {
