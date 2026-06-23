@@ -59,9 +59,9 @@ class LogSenderPlugin : Plugin<Project> {
         val debuggableBuilds = hashSetOf<String>()
 
         beforeVariants { variantBuilder ->
-          logger.info(
-            "Variant :'${variantBuilder.name}' isDebuggable: ${variantBuilder.debuggable}")
-          if (variantBuilder.debuggable) {
+          val isDebug = variantBuilder.buildType == "debug"
+          logger.info("Variant :'${variantBuilder.name}' isDebuggable: $isDebug")
+          if (isDebug) {
             debuggableBuilds.add(variantBuilder.name)
           }
         }
