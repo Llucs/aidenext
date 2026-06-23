@@ -17,7 +17,6 @@
 
 
 import com.aidenext.build.config.BuildConfig
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 @Suppress("JavaPluginLanguageLevel")
 plugins {
@@ -61,8 +60,8 @@ tasks.named("shadowJar") {
   finalizedBy("copyJar")
 }
 
-tasks.named<ShadowJar>("shadowJar") {
-  zip64 = true
+tasks.named("shadowJar") {
+  setProperty("zip64", true)
 }
 
 dependencies {
