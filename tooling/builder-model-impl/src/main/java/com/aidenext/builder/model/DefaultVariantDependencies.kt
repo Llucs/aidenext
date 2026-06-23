@@ -34,5 +34,4 @@ class DefaultVariantDependencies : VariantDependencies, Serializable {
   override var unitTestArtifact: DefaultArtifactDependencies? = null
   override val deviceTestArtifacts: Map<String, ArtifactDependencies> = emptyMap()
   override val hostTestArtifacts: Map<String, ArtifactDependencies> = emptyMap()
-  override val testSuiteArtifacts: Map<String, com.android.builder.model.v2.models.TestSuiteDependencies> = emptyMap()
 }
