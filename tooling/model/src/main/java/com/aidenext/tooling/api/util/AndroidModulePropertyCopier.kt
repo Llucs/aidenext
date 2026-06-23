@@ -136,7 +136,7 @@ object AndroidModulePropertyCopier {
       javaDirectories = provider.javaDirectories
       jniLibsDirectories = provider.jniLibsDirectories
       kotlinDirectories = provider.kotlinDirectories
-      manifestFile = provider.manifestFile
+      manifestFile = provider.manifestFile ?: DefaultSourceProvider.NoFile
       mlModelsDirectories = provider.mlModelsDirectories
       name = provider.name
       renderscriptDirectories = provider.renderscriptDirectories
