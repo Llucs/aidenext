@@ -21,7 +21,6 @@ import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.AndroidComponentsExtension
-import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.FilterConfiguration
 import com.android.build.api.variant.impl.getFilter
 import com.aidenext.build.config.BuildConfig
@@ -104,7 +103,7 @@ private fun Project.configureAppModule(
     if (project.plugins.hasPlugin("com.aidenext.core-app")) {
       packaging.jniLibs.useLegacyPackaging = true
 
-      extensions.getByType(ApplicationAndroidComponentsExtension::class.java).apply {
+      extensions.getByType(AndroidComponentsExtension::class.java).apply {
         onVariants { variant ->
           variant.outputs.forEach { output ->
             val verCodeIncr = flavorsAbis[output.getFilter(

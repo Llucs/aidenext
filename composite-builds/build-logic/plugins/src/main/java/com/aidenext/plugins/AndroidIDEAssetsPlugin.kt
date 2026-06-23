@@ -17,7 +17,7 @@
 
 package com.aidenext.plugins
 
-import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.android.build.api.variant.AndroidComponentsExtension
 import com.aidenext.build.config.BuildConfig
 import com.aidenext.build.config.downloadVersion
 import com.aidenext.plugins.tasks.AddAndroidJarToAssetsTask
@@ -42,7 +42,7 @@ class AndroidIDEAssetsPlugin : Plugin<Project> {
         GradleWrapperGeneratorTask::class.java)
 
       val androidComponentsExtension = extensions.getByType(
-        ApplicationAndroidComponentsExtension::class.java)
+        AndroidComponentsExtension::class.java)
 
       val setupAapt2TaskTaskProvider = tasks.register("setupAapt2", SetupAapt2Task::class.java)
 

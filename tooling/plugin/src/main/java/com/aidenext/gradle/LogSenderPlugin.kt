@@ -18,7 +18,7 @@
 package com.aidenext.gradle
 
 import com.android.build.api.component.analytics.AnalyticsEnabledApplicationVariant
-import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.android.build.api.variant.AndroidComponentsExtension
 import com.android.build.api.variant.ApplicationVariant
 import com.android.build.api.variant.impl.ApplicationVariantImpl
 import org.gradle.api.Plugin
@@ -54,8 +54,7 @@ class LogSenderPlugin : Plugin<Project> {
         "${javaClass.simpleName} can only be applied to Android application projects."
       }
 
-      (extensions.getByName(
-        "androidComponents") as ApplicationAndroidComponentsExtension).apply {
+      extensions.getByType(AndroidComponentsExtension::class.java).apply {
 
         val debuggableBuilds = hashSetOf<String>()
 
