@@ -20,7 +20,7 @@ import com.aidenext.build.config.BuildConfig
 
 @Suppress("JavaPluginLanguageLevel")
 plugins {
-  id("com.github.johnrengelman.shadow") version "8.3.6"
+  id("io.github.goooler.shadow") version "8.1.8"
   id("java-library")
   id("kotlin-kapt")
   id("org.jetbrains.kotlin.jvm")
@@ -56,8 +56,13 @@ tasks.named("jar") {
   finalizedBy("shadowJar")
 }
 
-tasks.named("shadowJar", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class) {
+tasks.named("shadowJar") {
   finalizedBy("copyJar")
+  mergeServiceFiles()
+  exclude("META-INF/maven/**")
+  exclude("META-INF/*.SF")
+  exclude("META-INF/*.DSA")
+  exclude("META-INF/*.RSA")
 }
 
 dependencies {
