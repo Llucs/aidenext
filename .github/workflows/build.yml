@@ -63,6 +63,18 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/libs.versions.toml') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+      - name: Install compatible Android SDK platform
+        run: |
+          export ANDROID_SDK_ROOT=$ANDROID_HOME
+          SDKMANAGER=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager
+          if [ ! -f "$SDKMANAGER" ]; then
+            SDKMANAGER=$ANDROID_SDK_ROOT/tools/bin/sdkmanager
+          fi
+          if [ -f "$SDKMANAGER" ]; then
+            yes | $SDKMANAGER --sdk_root=$ANDROID_SDK_ROOT "platforms;android-34" || true
+          fi
+          echo "Installed platforms:"
+          ls $ANDROID_SDK_ROOT/platforms/ 2>/dev/null || echo "No platforms dir"
       - name: Assemble ${{ matrix.build_type }} APK
         run: |
           build_type=${{ matrix.build_type }}
