@@ -69,11 +69,11 @@ dependencies {
   implementation(projects.utilities.shared)
 
   implementation(libs.common.jkotlin)
-  implementation("org.gradle:gradle-tooling-api:${gradle.gradleVersion}") {
-    because "Gradle Tooling API for communicating with Gradle daemon"
+  implementation("org.gradle:gradle-tooling-api:${gradle.gradleVersion!!}") {
+    because("Gradle Tooling API for communicating with Gradle daemon")
   }
-  implementation("org.gradle:gradle-core-api:${gradle.gradleVersion}") {
-    because "Gradle core API (org.gradle.api.*) for model building"
+  implementation("org.gradle:gradle-core-api:${gradle.gradleVersion!!}") {
+    because("Gradle core API (org.gradle.api.*) for model building")
   }
   implementation(libs.google.auto.service.annotations)
   implementation(libs.xml.xercesImpl)
