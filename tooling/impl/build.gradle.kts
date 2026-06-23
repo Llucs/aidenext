@@ -20,7 +20,7 @@ import com.aidenext.build.config.BuildConfig
 
 @Suppress("JavaPluginLanguageLevel")
 plugins {
-  id("com.github.johnrengelman.shadow") version "8.1.1"
+  id("com.github.johnrengelman.shadow") version "8.3.6"
   id("java-library")
   id("kotlin-kapt")
   id("org.jetbrains.kotlin.jvm")
@@ -56,7 +56,7 @@ tasks.named("jar") {
   finalizedBy("shadowJar")
 }
 
-tasks.named("shadowJar") {
+tasks.named("shadowJar", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class) {
   finalizedBy("copyJar")
 }
 
