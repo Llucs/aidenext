@@ -60,6 +60,12 @@ tasks.named("shadowJar") {
   finalizedBy("copyJar")
 }
 
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+tasks.named<ShadowJar>("shadowJar") {
+  zip64 = true
+}
+
 dependencies {
   kapt(libs.google.auto.service)
 
