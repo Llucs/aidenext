@@ -20,11 +20,19 @@ import com.aidenext.build.config.BuildConfig
 
 plugins {
   id("com.android.library")
-  id("kotlin-kapt")
+  id("com.google.devtools.ksp") version libs.versions.ksp
 }
 
 android {
   namespace = "${BuildConfig.packageName}.lsp.java"
+
+  defaultConfig {
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments["eventBusIndex"] = "${BuildConfig.packageName}.events.LspJavaEventsIndex"
+      }
+    }
+  }
 
   sourceSets {
     getByName("androidTest") {
@@ -33,15 +41,9 @@ android {
   }
 }
 
-kapt {
-  arguments {
-    arg("eventBusIndex", "${BuildConfig.packageName}.events.LspJavaEventsIndex")
-  }
-}
-
 dependencies {
-  kapt(projects.annotation.processors)
-  kapt(libs.google.auto.service)
+  ksp(projects.annotation.processorsKsp)
+  annotationProcessor(libs.google.auto.service)
 
   api(projects.core.indexingApi)
 

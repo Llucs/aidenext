@@ -20,24 +20,25 @@ import com.aidenext.build.config.BuildConfig
 
 plugins {
     id("com.android.library")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp") version libs.versions.ksp
 }
 
 
 
 android {
     namespace = "${BuildConfig.packageName}.xml.lsp"
-}
-
-kapt {
-    arguments {
-        arg ("eventBusIndex", "${BuildConfig.packageName}.events.LspXmlEventsIndex")
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["eventBusIndex"] = "${BuildConfig.packageName}.events.LspXmlEventsIndex"
+            }
+        }
     }
 }
 
 dependencies {
     
-    kapt(projects.annotation.processors)
+    ksp(projects.annotation.processorsKsp)
     
     implementation(libs.common.editor)
     implementation(libs.common.utilcode)

@@ -20,7 +20,6 @@ import com.aidenext.build.config.BuildConfig
 
 plugins {
   id("com.android.library")
-  id("kotlin-kapt")
 }
 
 android {
@@ -28,7 +27,7 @@ android {
 }
 
 dependencies {
-  kapt(libs.google.auto.service)
+  annotationProcessor(libs.google.auto.service)
   implementation(libs.google.auto.service.annotations)
 
   api(projects.core.common)

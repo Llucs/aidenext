@@ -20,7 +20,6 @@ import com.aidenext.build.config.BuildConfig
 
 plugins{
     id("com.android.library")
-    id("kotlin-kapt")
 }
 
 
@@ -30,7 +29,7 @@ extensions.configure<com.android.build.api.dsl.LibraryExtension> {
 }
 
 dependencies {
-    kapt(libs.google.auto.service)
+    annotationProcessor(libs.google.auto.service)
 
     api(libs.androidx.nav.fragment)
     api(libs.androidx.nav.ui)

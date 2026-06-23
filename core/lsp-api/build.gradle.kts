@@ -20,24 +20,25 @@ import com.aidenext.build.config.BuildConfig
 
 plugins {
     id("com.android.library")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp") version libs.versions.ksp
 }
 
 
 
 android {
     namespace = "${BuildConfig.packageName}.lsp.api"
-}
-
-kapt {
-    arguments {
-        arg ("eventBusIndex", "${BuildConfig.packageName}.events.LspApiEventsIndex")
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["eventBusIndex"] = "${BuildConfig.packageName}.events.LspApiEventsIndex"
+            }
+        }
     }
 }
 
 dependencies {
     
-    kapt(projects.annotation.processors)
+    ksp(projects.annotation.processorsKsp)
 
     implementation(libs.composite.fuzzysearch)
 

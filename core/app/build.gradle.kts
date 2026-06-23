@@ -24,10 +24,10 @@ import com.aidenext.plugins.AndroidIDEAssetsPlugin
 plugins {
   id("com.aidenext.core-app")
   id("com.android.application")
-  id("kotlin-kapt")
   id("kotlin-parcelize")
   id("androidx.navigation.safeargs.kotlin")
   id("com.aidenext.desugaring")
+  id("com.google.devtools.ksp") version libs.versions.ksp
 }
 
 apply {
@@ -47,6 +47,11 @@ android {
   defaultConfig {
     applicationId = BuildConfig.packageName
     vectorDrawables.useSupportLibrary = true
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments["eventBusIndex"] = "${BuildConfig.packageName}.events.AppEventsIndex"
+      }
+    }
   }
 
   androidResources {
@@ -65,12 +70,6 @@ android {
   }
 }
 
-kapt {
-  arguments {
-    arg("eventBusIndex", "${BuildConfig.packageName}.events.AppEventsIndex")
-  }
-}
-
 desugaring {
   replacements {
     includePackage(
@@ -85,9 +84,9 @@ dependencies {
   debugImplementation(libs.common.leakcanary)
 
   // Annotation processors
-  kapt(libs.common.glide.ap)
-  kapt(libs.google.auto.service)
-  kapt(projects.annotation.processors)
+  annotationProcessor(libs.common.glide.ap)
+  annotationProcessor(libs.google.auto.service)
+  ksp(projects.annotation.processorsKsp)
 
   implementation(libs.common.editor)
   implementation(libs.common.utilcode)
