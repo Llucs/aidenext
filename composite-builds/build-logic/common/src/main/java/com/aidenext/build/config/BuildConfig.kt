@@ -5,7 +5,7 @@ import org.gradle.api.JavaVersion
 object BuildConfig {
   const val packageName = "com.aidenext"
 
-  const val compileSdk = 34
+  const val compileSdk = 36
 
   const val minSdk = 26
 
