@@ -24,7 +24,6 @@ import com.aidenext.plugins.TerminalBootstrapPackagesPlugin
 
 plugins {
     id("com.android.library")
-    id("kotlin-android")
 }
 
 apply {
