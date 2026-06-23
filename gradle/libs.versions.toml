@@ -1,6 +1,6 @@
 [versions]
-agp = "9.2.1"
-agp-tooling = "9.2.1"
+agp = "8.4.0"
+agp-tooling = "8.4.0"
 
 junit-jupiter = "6.1.0"
 kotlin = "1.9.24"
