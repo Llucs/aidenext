@@ -28,6 +28,7 @@ dependencies {
     implementation(libs.google.guava)
     implementation(libs.google.auto.value.annotations)
     implementation(libs.google.auto.service.annotations)
+    implementation(libs.google.checker.qual)
     implementation(projects.buildDeps.javac)
 
     annotationProcessor(libs.google.auto.value.ap)

@@ -21,6 +21,7 @@ logback = "1.5.34"
 realm = "10.18.0"
 benchmark = "1.4.1"
 benchmark-junit4 = "1.4.1"
+checker-qual = "3.42.0"
 
 [libraries]
 
@@ -116,6 +117,7 @@ google-auto-service = { module = "com.google.auto.service:auto-service", version
 google-protobuf = { module = "com.google.protobuf:protobuf-javalite", version = "4.35.0" }
 google-java-format = { module = "com.google.googlejavaformat:google-java-format", version = "1.20.0" }
 google-flexbox = { module = "com.google.android.flexbox:flexbox", version = "3.0.0" }
+google-checker-qual = { module = "org.checkerframework:checker-qual", version.ref = "checker-qual" }
 
 # AAPT2
 aapt2-common = { module = "com.android.tools:common", version = "31.4.1" }
