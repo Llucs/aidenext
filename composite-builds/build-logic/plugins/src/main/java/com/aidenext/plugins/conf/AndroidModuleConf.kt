@@ -96,7 +96,7 @@ private fun Project.configureAppModule(
     compileOptions.sourceCompatibility = BuildConfig.javaVersion
     compileOptions.targetCompatibility = BuildConfig.javaVersion
 
-    this@configureAppModule.configureDesugaring(this as CommonExtension<*, *, *, *, *, *>, coreLibDesugDep)
+    this@configureAppModule.configureDesugaring(this as CommonExtension, coreLibDesugDep)
 
     if (project.plugins.hasPlugin("com.aidenext.core-app")) {
       packaging.jniLibs.useLegacyPackaging = true
@@ -158,7 +158,7 @@ private fun Project.configureLibraryModule(
       multiDexEnabled = true
     }
 
-    this@configureLibraryModule.configureDesugaring(this as CommonExtension<*, *, *, *, *, *>, coreLibDesugDep)
+    this@configureLibraryModule.configureDesugaring(this as CommonExtension, coreLibDesugDep)
 
     buildTypes.named("debug") { isMinifyEnabled = false }
     buildTypes.named("release") {
@@ -178,11 +178,11 @@ private fun Project.configureLibraryModule(
 }
 
 private fun Project.configureDesugaring(
-  extension: CommonExtension<*, *, *, *, *, *>,
+  extension: CommonExtension,
   coreLibDesugDep: Provider<MinimalExternalModuleDependency>
 ) {
   val enabled = !plugins.hasPlugin(NoDesugarPlugin::class.java)
-  extension.compileOptions.isCoreLibraryDesugaringEnabled = enabled
+  extension.compileOptions.setCoreLibraryDesugaringEnabled(enabled)
   if (enabled) {
     dependencies.add("coreLibraryDesugaring", coreLibDesugDep)
   }
