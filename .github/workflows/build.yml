@@ -80,7 +80,10 @@ jobs:
           yes | $CMDLINE_TOOLS_DIR/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT \
             "platforms;android-37" "build-tools;36.0.0" || true
           echo "Installed platforms:"
-          ls $ANDROID_SDK_ROOT/platforms/ 2>/dev/null || echo "No platforms dir"
+          ls -d $ANDROID_SDK_ROOT/platforms/*/ 2>/dev/null || echo "No platforms dir"
+          if [ -d "$ANDROID_SDK_ROOT/platforms/android-37.0" ] && [ ! -d "$ANDROID_SDK_ROOT/platforms/android-37" ]; then
+            ln -s android-37.0 "$ANDROID_SDK_ROOT/platforms/android-37"
+          fi
       - name: Assemble ${{ matrix.build_type }} APK
         run: |
           build_type=${{ matrix.build_type }}
@@ -124,6 +127,9 @@ jobs:
           export ANDROID_SDK_ROOT=$ANDROID_HOME
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager \
             --sdk_root=$ANDROID_SDK_ROOT "platforms;android-37" || true
+          if [ -d "$ANDROID_SDK_ROOT/platforms/android-37.0" ] && [ ! -d "$ANDROID_SDK_ROOT/platforms/android-37" ]; then
+            ln -s android-37.0 "$ANDROID_SDK_ROOT/platforms/android-37"
+          fi
       - name: Run unit tests
         run: ./gradlew runTestsInCI --continue --stacktrace
         env:
@@ -165,6 +171,9 @@ jobs:
           export ANDROID_SDK_ROOT=$ANDROID_HOME
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager \
             --sdk_root=$ANDROID_SDK_ROOT "platforms;android-37" || true
+          if [ -d "$ANDROID_SDK_ROOT/platforms/android-37.0" ] && [ ! -d "$ANDROID_SDK_ROOT/platforms/android-37" ]; then
+            ln -s android-37.0 "$ANDROID_SDK_ROOT/platforms/android-37"
+          fi
       - name: Run tooling API tests
         run: ./gradlew :tooling:impl:build --continue --stacktrace
         env:
