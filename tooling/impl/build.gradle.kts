@@ -72,7 +72,7 @@ dependencies {
   implementation("org.gradle:gradle-tooling-api:${gradle.gradleVersion!!}") {
     because("Gradle Tooling API for communicating with Gradle daemon")
   }
-  implementation("org.gradle:gradle-core-api:${gradle.gradleVersion!!}") {
+  implementation("org.gradle:gradle-api:${gradle.gradleVersion!!}") {
     because("Gradle core API (org.gradle.api.*) for model building")
   }
   implementation(libs.google.auto.service.annotations)
