@@ -158,7 +158,7 @@ tests-barista = { module = "com.adevinta.android:barista", version = "4.3.0" }
 
 # Tooling
 tooling-builderModel = { module = "com.android.tools.build:builder-model", version.ref = "agp-tooling" }
-tooling-slf4j = { module = "org.slf4j:slf4j-api", version = "2.0.18" }
+tooling-slf4j = { module = "org.slf4j:slf4j-api", version = "2.0.17" }
 
 # Classpaths
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
