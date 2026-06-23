@@ -56,7 +56,7 @@ tasks.named("jar") {
   finalizedBy("shadowJar")
 }
 
-tasks.named("shadowJar", io.github.goooler.shadow.tasks.ShadowJar::class) {
+tasks.named("shadowJar") {
   finalizedBy("copyJar")
 }
 
