@@ -182,7 +182,9 @@ private fun Project.configureDesugaring(
   coreLibDesugDep: Provider<MinimalExternalModuleDependency>
 ) {
   val enabled = !plugins.hasPlugin(NoDesugarPlugin::class.java)
-  extension.compileOptions.setCoreLibraryDesugaringEnabled(enabled)
+  extension.compileOptions.apply {
+    isCoreLibraryDesugaringEnabled = enabled
+  }
   if (enabled) {
     dependencies.add("coreLibraryDesugaring", coreLibDesugDep)
   }
