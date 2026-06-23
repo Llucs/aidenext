@@ -15,6 +15,8 @@
  *   along with AndroidIDE.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:Suppress("INACCESSIBLE_TYPE")
+
 package com.aidenext.tooling.api.util
 
 import com.android.builder.model.v2.ide.LibraryType.ANDROID_LIBRARY

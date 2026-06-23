@@ -156,7 +156,7 @@ abstract class AbstractModelBuilder<P, R>(
      * @param <T> The model type.
      */
     @JvmStatic
-    protected fun <P, T> BuildController.getModelAndLog(
+    protected fun <P : Any, T> BuildController.getModelAndLog(
       target: Model,
       modelType: Class<T>,
       parameterType: Class<P>,

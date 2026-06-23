@@ -241,7 +241,7 @@ class EventTransformer {
           result.startTime,
           result.endTime,
           result.isIncremental,
-          result.executionReasons
+          result.executionReasons ?: emptyList()
         )
       }
 
@@ -257,7 +257,7 @@ class EventTransformer {
           result.startTime,
           result.endTime,
           result.isIncremental,
-          result.executionReasons
+          result.executionReasons ?: emptyList()
         )
       }
 

@@ -30,6 +30,7 @@ import com.android.builder.model.v2.models.VariantDependencies
 import com.android.builder.model.v2.models.Versions
 import com.aidenext.builder.model.DefaultLibrary
 import com.aidenext.builder.model.DefaultSourceSetContainer
+import com.aidenext.builder.model.DefaultJavaCompileOptions
 import com.aidenext.builder.model.DefaultViewBindingOptions
 import com.aidenext.tooling.api.IAndroidProject
 import com.aidenext.tooling.api.models.AndroidArtifactMetadata
@@ -167,7 +168,7 @@ internal class AndroidProjectImpl(
 
       return@supplyAsync AndroidProjectMetadata(gradleMetadata,
         basicAndroidProject.projectType, copy(androidProject.flags),
-        copy(androidProject.javaCompileOptions), viewBindingOptions, androidProject.resourcePrefix,
+        androidProject.javaCompileOptions?.let { copy(it) } ?: DefaultJavaCompileOptions(), viewBindingOptions, androidProject.resourcePrefix,
         androidProject.namespace, androidProject.androidTestNamespace,
         androidProject.testFixturesNamespace, getClassesJar())
     }

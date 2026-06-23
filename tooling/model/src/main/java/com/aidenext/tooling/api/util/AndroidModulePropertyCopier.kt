@@ -115,6 +115,7 @@ object AndroidModulePropertyCopier {
     return new
   }
 
+  @Suppress("DEPRECATION")
   fun copy(container: SourceSetContainer): DefaultSourceSetContainer {
     return DefaultSourceSetContainer().apply {
       androidTestSourceProvider = copy(container.androidTestSourceProvider)

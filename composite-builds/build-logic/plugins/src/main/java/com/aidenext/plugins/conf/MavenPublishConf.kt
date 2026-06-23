@@ -17,6 +17,7 @@
 
 package com.aidenext.plugins.conf
 
+import com.aidenext.build.config.CI
 import com.aidenext.build.config.ProjectConfig
 import com.aidenext.build.config.publishingVersion
 import com.vanniktech.maven.publish.AndroidMultiVariantLibrary
@@ -104,7 +105,9 @@ fun Project.configureMavenPublish() {
 
     coordinates(project.group.toString(), project.name, project.publishingVersion)
     publishToMavenCentral(automaticRelease = true)
-    signAllPublications()
+    if (!CI.isCiBuild) {
+      signAllPublications()
+    }
 
     if (plugins.hasPlugin("com.android.library")) {
       configure(AndroidMultiVariantLibrary())

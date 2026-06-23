@@ -42,7 +42,7 @@ internal open class GradleProjectImpl (
         gradleProject.projectDirectory,
         gradleProject.buildDirectory,
         gradleProject.description,
-        gradleProject.buildScript.sourceFile,
+        gradleProject.buildScript.sourceFile ?: gradleProject.projectDirectory.resolve("build.gradle"),
         ProjectType.Gradle
       )
     }
