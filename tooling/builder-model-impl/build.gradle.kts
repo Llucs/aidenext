@@ -1,4 +1,5 @@
 /*
+ *  AidENext - Android IDE for the next generation
  *  This file is part of AndroidIDE.
  *
  *  AndroidIDE is free software: you can redistribute it and/or modify
