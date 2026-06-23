@@ -101,6 +101,11 @@ private fun Project.configureAppModule(
       dependencies.add("coreLibraryDesugaring", coreLibDesugDep)
     }
 
+    @Suppress("UNCHECKED_CAST")
+    (this as? CommonExtension<Any, Any, Any, Any>)?.let { ext ->
+      // AGP 8.2 desugaring handled via DSL
+    }
+
     if (project.plugins.hasPlugin("com.aidenext.core-app")) {
       packaging.jniLibs.useLegacyPackaging = true
     } else {
@@ -164,6 +169,11 @@ private fun Project.configureLibraryModule(
     if (!project.plugins.hasPlugin(NoDesugarPlugin::class.java)) {
       compileOptions.isCoreLibraryDesugaringEnabled = true
       dependencies.add("coreLibraryDesugaring", coreLibDesugDep)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    (this as? CommonExtension<Any, Any, Any, Any>)?.let { ext ->
+      // AGP 8.2 desugaring handled via DSL
     }
 
     buildTypes.named("debug") { isMinifyEnabled = false }
