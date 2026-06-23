@@ -69,7 +69,7 @@ dependencies {
   implementation(projects.utilities.shared)
 
   implementation(libs.common.jkotlin)
-  implementation("org.gradle:gradle-tooling-api:9.5.1")
+  implementation(files(gradle.gradleHomeDir.resolve("lib/gradle-tooling-api-${gradle.gradleVersion}.jar")))
   implementation(libs.google.auto.service.annotations)
   implementation(libs.xml.xercesImpl)
   implementation(libs.xml.apis)
