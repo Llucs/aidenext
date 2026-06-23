@@ -178,7 +178,7 @@ private fun Project.configureLibraryModule(
 }
 
 private fun Project.configureDesugaring(
-  extension: CommonExtension<*, *, *, *, *, *>,
+  extension: CommonExtension,
   coreLibDesugDep: Provider<MinimalExternalModuleDependency>
 ) {
   val enabled = !plugins.hasPlugin(NoDesugarPlugin::class.java)
