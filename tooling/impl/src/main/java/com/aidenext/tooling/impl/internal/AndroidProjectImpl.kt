@@ -81,9 +81,9 @@ internal class AndroidProjectImpl(
       generatedResourceFolders = generatedResourceFolders,
       generatedSourceFolders = generatedSourceFolders, maxSdkVersion = maxSdkVersion,
       minSdkVersion = minSdkVersion.apiLevel, signingConfigName = signingConfigName,
-      sourceGenTaskName = sourceGenTaskName, assembleTaskName = assembleTaskName,
+      sourceGenTaskName = sourceGenTaskName!!, assembleTaskName = assembleTaskName!!,
       classJars = classesFolders.filter { it.name.endsWith(".jar") },
-      compileTaskName = compileTaskName,
+      compileTaskName = compileTaskName!!,
       targetSdkVersionOverride = targetSdkVersionOverride?.apiLevel ?: -1)
   }
 

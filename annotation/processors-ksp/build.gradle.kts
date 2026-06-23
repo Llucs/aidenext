@@ -19,6 +19,7 @@
 import com.aidenext.build.config.BuildConfig
 
 plugins {
+  `java-library`
   kotlin("jvm")
   kotlin("kapt")
 }
