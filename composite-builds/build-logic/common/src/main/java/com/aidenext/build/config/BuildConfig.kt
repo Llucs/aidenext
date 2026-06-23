@@ -11,7 +11,7 @@ object BuildConfig {
 
   const val targetSdk = 34
 
-  const val ndkVersion = "27.0.12077973"
+  const val ndkVersion = "27.1.12296606"
 
   val javaVersion = JavaVersion.VERSION_17
 }
