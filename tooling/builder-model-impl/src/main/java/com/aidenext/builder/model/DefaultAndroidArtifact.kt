@@ -19,6 +19,7 @@ package com.aidenext.builder.model
 import com.android.builder.model.v2.ide.AndroidArtifact
 import com.android.builder.model.v2.ide.BytecodeTransformation
 import com.android.builder.model.v2.ide.CodeShrinker
+import com.android.builder.model.v2.ide.PrivacySandboxSdkInfo
 import java.io.File
 import java.io.Serializable
 
@@ -47,7 +48,7 @@ class DefaultAndroidArtifact : AndroidArtifact, Serializable {
   override var targetSdkVersionOverride: DefaultApiVersion? = null
   override var modelSyncFiles: Collection<Void> = emptyList()
   override var desugaredMethodsFiles: Collection<File> = emptyList()
-  override val privacySandboxSdkInfo: Void? = null
+  override val privacySandboxSdkInfo: PrivacySandboxSdkInfo? = null
   override val generatedClassPaths: Map<String, File> = emptyMap()
   override val bytecodeTransformations: Collection<BytecodeTransformation> = emptyList()
 }
