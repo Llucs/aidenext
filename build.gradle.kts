@@ -68,6 +68,8 @@ subprojects {
           useVersion(kotlinVersion)
         }
       }
+      force("org.ow2.asm:asm:9.9")
+      force("org.ow2.asm:asm-commons:9.9")
     }
   }
 
