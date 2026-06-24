@@ -29,7 +29,7 @@ plugins {
 
 
 
-extensions.configure<LibraryExtension> {
+extensions.configure<com.android.build.api.dsl.LibraryExtension> {
     namespace = "io.github.rosemoe.sora.ts"
 }
 

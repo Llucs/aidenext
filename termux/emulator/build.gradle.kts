@@ -24,7 +24,7 @@ plugins {
 
 
 
-extensions.configure<LibraryExtension> {
+extensions.configure<com.android.build.api.dsl.LibraryExtension> {
     namespace = "com.termux.emulator"
     ndkVersion = BuildConfig.ndkVersion
 

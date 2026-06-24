@@ -26,7 +26,7 @@ plugins {
 
 
 
-extensions.configure<LibraryExtension> { namespace = "${BuildConfig.packageName}.inflater" }
+extensions.configure<com.android.build.api.dsl.LibraryExtension> { namespace = "${BuildConfig.packageName}.inflater" }
 
 dependencies {
   ksp(projects.annotation.processorsKsp)

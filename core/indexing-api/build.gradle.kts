@@ -22,7 +22,7 @@ plugins {
   id("com.android.library")
 }
 
-extensions.configure<LibraryExtension> {
+extensions.configure<com.android.build.api.dsl.LibraryExtension> {
   namespace = "${BuildConfig.packageName}.indexing.api"
 }
 

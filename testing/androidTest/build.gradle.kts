@@ -24,7 +24,7 @@ plugins {
 
 
 
-extensions.configure<LibraryExtension> {
+extensions.configure<com.android.build.api.dsl.LibraryExtension> {
   namespace = "${BuildConfig.packageName}.testing.android"
 }
 

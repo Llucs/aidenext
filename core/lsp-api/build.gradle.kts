@@ -25,7 +25,7 @@ plugins {
 
 
 
-extensions.configure<LibraryExtension> {
+extensions.configure<com.android.build.api.dsl.LibraryExtension> {
     namespace = "${BuildConfig.packageName}.lsp.api"
     defaultConfig {
         javaCompileOptions {

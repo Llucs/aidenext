@@ -24,7 +24,7 @@ plugins {
 
 
 
-extensions.configure<ApplicationExtension> {
+extensions.configure<com.android.build.api.dsl.ApplicationExtension> {
   namespace = "${BuildConfig.packageName}.logsender.sample"
 
   defaultConfig {
