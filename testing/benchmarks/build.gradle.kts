@@ -30,7 +30,7 @@ extensions.configure<com.android.build.api.dsl.LibraryExtension> {
 
   sourceSets {
     getByName("androidTest") {
-      assets.directories.add(rootProject.layout.projectDirectory.dir("utilities/framework-stubs/libs"))
+      assets.directories.add("../../utilities/framework-stubs/libs")
     }
   }
 
