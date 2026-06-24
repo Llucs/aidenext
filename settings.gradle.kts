@@ -32,15 +32,6 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-  @Suppress("UnstableApiUsage")
-  configurations.all {
-    resolutionStrategy.eachDependency {
-      if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {
-        useVersion("2.0.21")
-      }
-    }
-  }
-
   val dependencySubstitutions = mapOf(
     "build-deps" to arrayOf(
       "appintro",
@@ -81,7 +72,6 @@ dependencyResolutionManagement {
     maven { url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/") }
     maven { url = uri("https://s01.oss.sonatype.org/content/groups/public/") }
     maven { url = uri("https://jitpack.io") }
-    maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
   }
 }
 
@@ -90,7 +80,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath("com.mooltiverse.oss.nyx:gradle:3.1.4")
+    classpath("com.mooltiverse.oss.nyx:gradle:3.1.7")
   }
 }
 
@@ -160,7 +150,7 @@ include(
   ":termux:shared",
   ":termux:view",
   ":testing:androidTest",
-  //":testing:benchmarks",
+  ":testing:benchmarks",
   ":testing:commonTest",
   ":testing:gradleToolingTest",
   ":testing:lspTest",
