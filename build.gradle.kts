@@ -77,6 +77,7 @@ subprojects {
   project.version = rootProject.version
 
   plugins.withId("com.android.application") {
+    configurations.create("transform")
     dependencies {
       add("transform", "org.ow2.asm:asm:9.9")
       add("transform", "org.ow2.asm:asm-commons:9.9")
@@ -84,6 +85,7 @@ subprojects {
     configureAndroidModule(libs.androidx.libDesugaring)
   }
   plugins.withId("com.android.library") {
+    configurations.create("transform")
     dependencies {
       add("transform", "org.ow2.asm:asm:9.9")
       add("transform", "org.ow2.asm:asm-commons:9.9")
