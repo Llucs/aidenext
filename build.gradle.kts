@@ -52,8 +52,8 @@ val kotlinVersion = "2.3.20"
 
 subprojects {
   dependencies {
-    transform("org.ow2.asm:asm:9.9")
-    transform("org.ow2.asm:asm-commons:9.9")
+    add("transform", "org.ow2.asm:asm:9.9")
+    add("transform", "org.ow2.asm:asm-commons:9.9")
   }
 
   if (project != rootProject) {
