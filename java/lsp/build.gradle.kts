@@ -36,7 +36,7 @@ android {
 
   sourceSets {
     getByName("androidTest") {
-      assets.srcDir(rootProject.file("utilities/framework-stubs/libs"))
+      assets.directories.add(rootProject.file("utilities/framework-stubs/libs"))
     }
   }
 }
