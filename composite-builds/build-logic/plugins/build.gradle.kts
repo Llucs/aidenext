@@ -43,6 +43,15 @@ dependencies {
   implementation(libs.common.antlr4)
   implementation(libs.google.gson)
   implementation(libs.google.java.format)
+
+  constraints {
+    implementation("org.ow2.asm:asm:9.7.1") {
+      because("AGP 9.2.1 requires ASM9 API level which needs ASM >= 9.0")
+    }
+    implementation("org.ow2.asm:asm-commons:9.7.1") {
+      because("AGP 9.2.1 requires ASM9 API level which needs ASM >= 9.0")
+    }
+  }
 }
 
 gradlePlugin {
