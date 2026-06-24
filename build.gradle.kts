@@ -68,8 +68,6 @@ subprojects {
           useVersion(kotlinVersion)
         }
       }
-      force("org.ow2.asm:asm:9.9")
-      force("org.ow2.asm:asm-commons:9.9")
     }
   }
 
@@ -90,10 +88,9 @@ subprojects {
   }
 
   afterEvaluate {
-    configurations.findByName("transform")?.let {
-      dependencies.add("transform", "org.ow2.asm:asm:9.9")
-      dependencies.add("transform", "org.ow2.asm:asm-commons:9.9")
-    }
+    configurations.maybeCreate("transform")
+    dependencies.add("transform", "org.ow2.asm:asm:9.9")
+    dependencies.add("transform", "org.ow2.asm:asm-commons:9.9")
   }
   plugins.withId("java-library") { configureJavaModule() }
   plugins.withId("com.vanniktech.maven.publish.base") { configureMavenPublish() }
