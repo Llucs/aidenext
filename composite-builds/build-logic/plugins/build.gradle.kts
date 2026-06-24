@@ -31,6 +31,13 @@ kotlin {
   }
 }
 
+configurations.all {
+  resolutionStrategy {
+    force("org.ow2.asm:asm:9.9")
+    force("org.ow2.asm:asm-commons:9.9")
+  }
+}
+
 dependencies {
   implementation(projects.buildLogic.common)
   implementation(projects.buildLogic.desugaring)
@@ -43,8 +50,6 @@ dependencies {
   implementation(libs.common.antlr4)
   implementation(libs.google.gson)
   implementation(libs.google.java.format)
-  implementation("org.ow2.asm:asm:9.7.1")
-  implementation("org.ow2.asm:asm-commons:9.7.1")
 }
 
 gradlePlugin {

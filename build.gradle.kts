@@ -42,8 +42,6 @@ buildscript {
   dependencies {
     classpath(libs.kotlin.gradle.plugin)
     classpath(libs.nav.safe.args.gradle.plugin)
-    classpath("org.ow2.asm:asm:9.7.1")
-    classpath("org.ow2.asm:asm-commons:9.7.1")
   }
 }
 
@@ -53,6 +51,11 @@ project.group = BuildConfig.packageName
 val kotlinVersion = "2.3.20"
 
 subprojects {
+  dependencies {
+    transform("org.ow2.asm:asm:9.9")
+    transform("org.ow2.asm:asm-commons:9.9")
+  }
+
   if (project != rootProject) {
     var group = project.parent!!.group
     if (project.parent != rootProject) {
@@ -62,10 +65,14 @@ subprojects {
   }
 
   configurations.all {
-    resolutionStrategy.eachDependency {
-      if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {
-        useVersion(kotlinVersion)
+    resolutionStrategy {
+      eachDependency {
+        if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {
+          useVersion(kotlinVersion)
+        }
       }
+      force("org.ow2.asm:asm:9.9")
+      force("org.ow2.asm:asm-commons:9.9")
     }
   }
 
