@@ -77,20 +77,17 @@ subprojects {
   project.version = rootProject.version
 
   plugins.withId("com.android.application") {
-    configurations.create("transform")
-    dependencies {
-      add("transform", "org.ow2.asm:asm:9.9")
-      add("transform", "org.ow2.asm:asm-commons:9.9")
-    }
     configureAndroidModule(libs.androidx.libDesugaring)
   }
   plugins.withId("com.android.library") {
-    configurations.create("transform")
-    dependencies {
-      add("transform", "org.ow2.asm:asm:9.9")
-      add("transform", "org.ow2.asm:asm-commons:9.9")
-    }
     configureAndroidModule(libs.androidx.libDesugaring)
+  }
+
+  afterEvaluate {
+    configurations.findByName("transform")?.let {
+      dependencies.add("transform", "org.ow2.asm:asm:9.9")
+      dependencies.add("transform", "org.ow2.asm:asm-commons:9.9")
+    }
   }
   plugins.withId("java-library") { configureJavaModule() }
   plugins.withId("com.vanniktech.maven.publish.base") { configureMavenPublish() }
