@@ -60,7 +60,7 @@ subprojects {
   configurations.all {
     resolutionStrategy.eachDependency {
       if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {
-        useVersion("2.0.21")
+        useVersion(libs.versions.kotlin)
       }
     }
   }
