@@ -51,11 +51,6 @@ project.group = BuildConfig.packageName
 val kotlinVersion = "2.3.20"
 
 subprojects {
-  dependencies {
-    add("transform", "org.ow2.asm:asm:9.9")
-    add("transform", "org.ow2.asm:asm-commons:9.9")
-  }
-
   if (project != rootProject) {
     var group = project.parent!!.group
     if (project.parent != rootProject) {
@@ -65,14 +60,10 @@ subprojects {
   }
 
   configurations.all {
-    resolutionStrategy {
-      eachDependency {
-        if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {
-          useVersion(kotlinVersion)
-        }
+    resolutionStrategy.eachDependency {
+      if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {
+        useVersion(kotlinVersion)
       }
-      force("org.ow2.asm:asm:9.9")
-      force("org.ow2.asm:asm-commons:9.9")
     }
   }
 
@@ -86,9 +77,17 @@ subprojects {
   project.version = rootProject.version
 
   plugins.withId("com.android.application") {
+    dependencies {
+      add("transform", "org.ow2.asm:asm:9.9")
+      add("transform", "org.ow2.asm:asm-commons:9.9")
+    }
     configureAndroidModule(libs.androidx.libDesugaring)
   }
   plugins.withId("com.android.library") {
+    dependencies {
+      add("transform", "org.ow2.asm:asm:9.9")
+      add("transform", "org.ow2.asm:asm-commons:9.9")
+    }
     configureAndroidModule(libs.androidx.libDesugaring)
   }
   plugins.withId("java-library") { configureJavaModule() }
