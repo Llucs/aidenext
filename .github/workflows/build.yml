@@ -66,6 +66,10 @@ jobs:
       - name: Install latest cmdline-tools and Android SDK platform
         run: |
           export ANDROID_SDK_ROOT=$ANDROID_HOME
+          echo "Pre-installed platforms:"
+          ls -d $ANDROID_SDK_ROOT/platforms/*/ 2>/dev/null || echo "No platforms dir"
+          echo "Pre-installed build-tools:"
+          ls -d $ANDROID_SDK_ROOT/build-tools/*/ 2>/dev/null || echo "No build-tools dir"
           CMDLINE_TOOLS_ZIP=/tmp/cmdline-tools.zip
           CMDLINE_TOOLS_DIR=$ANDROID_SDK_ROOT/cmdline-tools/latest
           if [ ! -f "$CMDLINE_TOOLS_DIR/bin/sdkmanager" ]; then
@@ -78,7 +82,7 @@ jobs:
             rm -rf /tmp/cmdline-tools-tmp "$CMDLINE_TOOLS_ZIP"
           fi
           yes | $CMDLINE_TOOLS_DIR/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT \
-            "platforms;android-33" "platforms;android-34" "platforms;android-36" "build-tools;33.0.0" "build-tools;34.0.0" "build-tools;36.0.0" || true
+            "build-tools;33.0.0" "build-tools;34.0.0" "build-tools;36.0.0" || true
           echo "Installed platforms:"
           ls -d $ANDROID_SDK_ROOT/platforms/*/ 2>/dev/null || echo "No platforms dir"
       - name: Assemble ${{ matrix.build_type }} APK
@@ -123,7 +127,7 @@ jobs:
         run: |
           export ANDROID_SDK_ROOT=$ANDROID_HOME
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager \
-            --sdk_root=$ANDROID_SDK_ROOT             "platforms;android-33" "platforms;android-34" "platforms;android-36" "build-tools;33.0.0" "build-tools;34.0.0" "build-tools;36.0.0" || true
+            --sdk_root=$ANDROID_SDK_ROOT             "build-tools;33.0.0" "build-tools;34.0.0" "build-tools;36.0.0" || true
       - name: Run unit tests
         run: ./gradlew runTestsInCI --continue --stacktrace
         env:
@@ -164,7 +168,7 @@ jobs:
         run: |
           export ANDROID_SDK_ROOT=$ANDROID_HOME
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager \
-            --sdk_root=$ANDROID_SDK_ROOT             "platforms;android-33" "platforms;android-34" "platforms;android-36" "build-tools;33.0.0" "build-tools;34.0.0" "build-tools;36.0.0" || true
+            --sdk_root=$ANDROID_SDK_ROOT             "build-tools;33.0.0" "build-tools;34.0.0" "build-tools;36.0.0" || true
       - name: Run tooling API tests
         run: ./gradlew :tooling:impl:build --continue --stacktrace
         env:
