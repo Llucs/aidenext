@@ -24,7 +24,7 @@ plugins {
 
 
 
-android {
+extensions.configure<LibraryExtension> {
     namespace = "com.termux.view"
     ndkVersion = BuildConfig.ndkVersion
 }

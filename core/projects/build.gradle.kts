@@ -26,7 +26,7 @@ plugins {
 
 
 
-android {
+extensions.configure<LibraryExtension> {
   namespace = "${BuildConfig.packageName}.projects"
   defaultConfig {
     javaCompileOptions {

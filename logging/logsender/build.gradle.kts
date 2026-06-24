@@ -32,7 +32,7 @@ apply {
 
 description = "LogSender is used to read logs from applications built with AndroidIDE"
 
-android {
+extensions.configure<LibraryExtension> {
   namespace = "${BuildConfig.packageName}.logsender"
 
   defaultConfig {

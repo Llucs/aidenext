@@ -25,7 +25,7 @@ plugins {
 
 
 
-android {
+extensions.configure<LibraryExtension> {
   namespace = "${BuildConfig.packageName}.benchmark"
 
   sourceSets {

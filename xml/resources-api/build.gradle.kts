@@ -23,7 +23,7 @@ plugins {
   id("com.google.protobuf")
 }
 
-android {
+extensions.configure<LibraryExtension> {
   namespace = "${BuildConfig.packageName}.xml.resapi"
 }
 

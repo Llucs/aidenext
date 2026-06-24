@@ -41,7 +41,7 @@ buildscript {
   }
 }
 
-android {
+extensions.configure<ApplicationExtension> {
   namespace = BuildConfig.packageName
 
   defaultConfig {

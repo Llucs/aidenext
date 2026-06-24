@@ -20,6 +20,6 @@ plugins { id("com.android.library") }
 
 
 
-android { namespace = "com.unnamed.b.atv" }
+extensions.configure<LibraryExtension> { namespace = "com.unnamed.b.atv" }
 
 dependencies { implementation(libs.androidx.appcompat) }

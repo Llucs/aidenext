@@ -24,7 +24,7 @@ plugins {
 
 
 
-android {
+extensions.configure<LibraryExtension> {
     namespace = "com.termux.shared"
     ndkVersion = BuildConfig.ndkVersion
 

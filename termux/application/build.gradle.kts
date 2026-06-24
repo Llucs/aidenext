@@ -34,7 +34,7 @@ apply {
 
 val packageVariant = System.getenv("TERMUX_PACKAGE_VARIANT") ?: "apt-android-7" // Default: "apt-android-7"
 
-android {
+extensions.configure<LibraryExtension> {
     namespace = "com.termux"
     ndkVersion = BuildConfig.ndkVersion
 

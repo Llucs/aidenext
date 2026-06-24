@@ -23,7 +23,7 @@ plugins {
   id("com.google.devtools.ksp") version libs.versions.ksp
 }
 
-android {
+extensions.configure<LibraryExtension> {
   namespace = "${BuildConfig.packageName}.lsp.java"
 
   defaultConfig {

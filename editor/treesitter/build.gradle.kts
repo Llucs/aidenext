@@ -29,7 +29,7 @@ plugins {
 
 
 
-android {
+extensions.configure<LibraryExtension> {
     namespace = "io.github.rosemoe.sora.ts"
 }
 

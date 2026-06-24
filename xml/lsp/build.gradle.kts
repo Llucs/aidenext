@@ -25,7 +25,7 @@ plugins {
 
 
 
-android {
+extensions.configure<LibraryExtension> {
     namespace = "${BuildConfig.packageName}.xml.lsp"
     defaultConfig {
         javaCompileOptions {

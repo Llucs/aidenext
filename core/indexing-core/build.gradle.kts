@@ -22,7 +22,7 @@ plugins {
   id("com.android.library")
 }
 
-android {
+extensions.configure<LibraryExtension> {
   namespace = "${BuildConfig.packageName}.indexing.core"
 }
 
