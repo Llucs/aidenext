@@ -24,6 +24,7 @@ import com.aidenext.plugins.AndroidIDEPlugin
 import com.aidenext.plugins.conf.configureAndroidModule
 import com.aidenext.plugins.conf.configureJavaModule
 import com.aidenext.plugins.conf.configureMavenPublish
+import org.gradle.api.plugins.catalog.VersionCatalogsExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -48,7 +49,13 @@ buildscript {
 // Root project has 'com.aidenext' as the group ID
 project.group = BuildConfig.packageName
 
-val kotlinVersion: String = libs.versions.kotlin.get()
+val kotlinVersion: String = rootProject
+  .extensions
+  .getByType<VersionCatalogsExtension>()
+  .named("libs")
+  .findVersion("kotlin")
+  .get()
+  .requiredVersion
 
 subprojects {
   if (project != rootProject) {
