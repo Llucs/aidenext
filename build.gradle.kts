@@ -42,8 +42,6 @@ buildscript {
   dependencies {
     classpath(libs.kotlin.gradle.plugin)
     classpath(libs.nav.safe.args.gradle.plugin)
-    classpath("org.ow2.asm:asm:9.9")
-    classpath("org.ow2.asm:asm-commons:9.9")
   }
 }
 
@@ -68,8 +66,7 @@ subprojects {
           useVersion(kotlinVersion)
         }
       }
-      force("org.ow2.asm:asm:9.9")
-      force("org.ow2.asm:asm-commons:9.9")
+
     }
   }
 
@@ -89,11 +86,6 @@ subprojects {
     configureAndroidModule(libs.androidx.libDesugaring)
   }
 
-  afterEvaluate {
-    configurations.maybeCreate("transform")
-    dependencies.add("transform", "org.ow2.asm:asm:9.9")
-    dependencies.add("transform", "org.ow2.asm:asm-commons:9.9")
-  }
   plugins.withId("java-library") { configureJavaModule() }
   plugins.withId("com.vanniktech.maven.publish.base") { configureMavenPublish() }
 
