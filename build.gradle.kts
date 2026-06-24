@@ -48,6 +48,8 @@ buildscript {
 // Root project has 'com.aidenext' as the group ID
 project.group = BuildConfig.packageName
 
+val kotlinVersion: String = libs.versions.kotlin.get()
+
 subprojects {
   if (project != rootProject) {
     var group = project.parent!!.group
@@ -60,7 +62,7 @@ subprojects {
   configurations.all {
     resolutionStrategy.eachDependency {
       if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {
-        useVersion(libs.versions.kotlin.get())
+        useVersion(kotlinVersion)
       }
     }
   }
