@@ -39,6 +39,12 @@ plugins {
 }
 
 buildscript {
+  configurations.getByName("classpath") {
+    resolutionStrategy {
+      force("org.ow2.asm:asm:9.9")
+      force("org.ow2.asm:asm-commons:9.9")
+    }
+  }
   dependencies {
     classpath(libs.kotlin.gradle.plugin)
     classpath(libs.nav.safe.args.gradle.plugin)
