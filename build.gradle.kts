@@ -57,6 +57,14 @@ subprojects {
     project.group = group
   }
 
+  configurations.all {
+    resolutionStrategy.eachDependency {
+      if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {
+        useVersion("2.0.21")
+      }
+    }
+  }
+
   // Always load the F-Droid config
   FDroidConfig.load(project)
 
