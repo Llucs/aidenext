@@ -24,7 +24,7 @@ env:
   IDE_SIGNING_STORE_PASS: ${{ secrets.IDE_SIGNING_STORE_PASS }}
   IDE_SIGNING_URL: ${{ secrets.IDE_SIGNING_URL }}
   IDE_SIGNING_KEY_BIN: ${{ secrets.IDE_SIGNING_KEY_BIN }}
-  BUILD_JAVA_VERSION: '21'
+  BUILD_JAVA_VERSION: '17'
   BUILD_JAVA_DIST: 'temurin'
   BUILD_IS_RELEASE: ${{ github.ref == 'refs/heads/main' }}
   ReleaseAIDENext: ${{ github.ref == 'refs/heads/main' }}
