@@ -36,7 +36,7 @@ dependencies {
   implementation(projects.buildLogic.desugaring)
   implementation(projects.buildLogic.propertiesParser)
 
-  implementation("com.android.tools.build:gradle:${libs.versions.agp.asProvider().get()}")
+  compileOnly(libs.android.gradle.plugin)
   implementation(libs.maven.publish)
 
   implementation(libs.common.jkotlin)
