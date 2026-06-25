@@ -42,7 +42,6 @@ buildscript {
   dependencies {
     classpath(libs.kotlin.gradle.plugin)
     classpath(libs.nav.safe.args.gradle.plugin)
-    classpath("org.ow2.asm:asm:9.9")
   }
 }
 
