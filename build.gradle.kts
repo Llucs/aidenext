@@ -65,6 +65,9 @@ subprojects {
         if (requested.group == "org.jetbrains.kotlin" && requested.name.startsWith("kotlin-stdlib")) {
           useVersion(kotlinVersion)
         }
+        if (requested.group == "org.ow2.asm") {
+          useVersion("9.9")
+        }
       }
 
     }
