@@ -80,11 +80,11 @@ subprojects {
   project.version = rootProject.version
 
   plugins.withId("com.android.application") {
-    apply("org.jetbrains.kotlin.android")
+    pluginManager.apply("org.jetbrains.kotlin.android")
     configureAndroidModule(libs.androidx.libDesugaring)
   }
   plugins.withId("com.android.library") {
-    apply("org.jetbrains.kotlin.android")
+    pluginManager.apply("org.jetbrains.kotlin.android")
     configureAndroidModule(libs.androidx.libDesugaring)
   }
 
