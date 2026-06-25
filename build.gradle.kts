@@ -102,6 +102,10 @@ subprojects {
       freeCompilerArgs.add("-Xskip-metadata-version-check")
     }
   }
+
+  tasks.withType<JavaCompile>().configureEach {
+    dependsOn(tasks.withType<KotlinCompile>())
+  }
 }
 
 tasks.register<Delete>("clean") { delete(rootProject.layout.buildDirectory) }
