@@ -42,6 +42,7 @@ dependencies {
     api(libs.androidx.core.ktx)
     api(libs.common.kotlin)
 
+    api(libs.androidx.documentfile)
     api(projects.core.resources)
     api(projects.editor.lexers)
     api(projects.event.eventbusAndroid)
