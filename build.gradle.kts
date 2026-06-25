@@ -48,7 +48,7 @@ buildscript {
 // Root project has 'com.aidenext' as the group ID
 project.group = BuildConfig.packageName
 
-val kotlinVersion = "1.9.22"
+val kotlinVersion = "2.0.21"
 
 subprojects {
   if (project != rootProject) {
@@ -81,11 +81,9 @@ subprojects {
 
   plugins.withId("com.android.application") {
     configureAndroidModule(libs.androidx.libDesugaring)
-    apply(plugin = "org.jetbrains.kotlin.android")
   }
   plugins.withId("com.android.library") {
     configureAndroidModule(libs.androidx.libDesugaring)
-    apply(plugin = "org.jetbrains.kotlin.android")
   }
 
   plugins.withId("java-library") { configureJavaModule() }
