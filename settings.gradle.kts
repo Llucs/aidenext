@@ -74,14 +74,6 @@ dependencyResolutionManagement {
     maven { url = uri("https://jitpack.io") }
     maven { url = uri("https://repo.gradle.org/gradle/libs-releases") }
   }
-
-  resolutionStrategy {
-    eachDependency {
-      if (requested.group == "org.ow2.asm") {
-        useVersion("9.9")
-      }
-    }
-  }
 }
 
 buildscript {
