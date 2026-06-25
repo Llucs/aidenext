@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.aidenext.template.Java.kts"
-    compileSdk = 34
+    compileSdk = 35
     
     defaultConfig {
         applicationId = "com.aidenext.template.Java.kts"

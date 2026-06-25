@@ -158,6 +158,7 @@ private fun Project.configureLibraryModule(
     compileOptions.targetCompatibility = BuildConfig.javaVersion
 
     defaultConfig {
+      minSdk = BuildConfig.minSdk
       multiDexEnabled = true
     }
 
