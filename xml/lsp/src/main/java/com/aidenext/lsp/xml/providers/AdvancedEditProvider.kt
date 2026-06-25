@@ -28,14 +28,14 @@ import com.aidenext.lsp.models.TextEdit
 import com.aidenext.lsp.xml.XMLLanguageServer
 import com.aidenext.models.Range
 import com.aidenext.projects.FileManager
-import com.aidenext.treesitter.TSParser
-import com.aidenext.treesitter.TSQuery
-import com.aidenext.treesitter.TSQueryCapture
-import com.aidenext.treesitter.TSQueryCursor
-import com.aidenext.treesitter.TSQueryError
-import com.aidenext.treesitter.TSQueryMatch
-import com.aidenext.treesitter.TSTree
-import com.aidenext.treesitter.xml.TSLanguageXml
+import com.itsaky.androidide.treesitter.TSParser
+import com.itsaky.androidide.treesitter.TSQuery
+import com.itsaky.androidide.treesitter.TSQueryCapture
+import com.itsaky.androidide.treesitter.TSQueryCursor
+import com.itsaky.androidide.treesitter.TSQueryError
+import com.itsaky.androidide.treesitter.TSQueryMatch
+import com.itsaky.androidide.treesitter.TSTree
+import com.itsaky.androidide.treesitter.xml.TSLanguageXml
 
 /** @author Akash Yadav */
 object AdvancedEditProvider {

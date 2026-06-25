@@ -187,9 +187,9 @@ public class ViewUtils {
         // API 30 and give wrong values in API 30 for activitySize=false in multi-window
         androidx.window.layout.WindowMetrics windowMetrics;
         if (activitySize)
-            windowMetrics = androidx.window.layout.WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(context);
+            windowMetrics = androidx.window.layout.WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics((Activity) context);
         else
-            windowMetrics = androidx.window.layout.WindowMetricsCalculator.getOrCreate().computeMaximumWindowMetrics(context);
+            windowMetrics = androidx.window.layout.WindowMetricsCalculator.getOrCreate().computeMaximumWindowMetrics((Activity) context);
         return new Point(windowMetrics.getBounds().width(), windowMetrics.getBounds().height());
     }
 

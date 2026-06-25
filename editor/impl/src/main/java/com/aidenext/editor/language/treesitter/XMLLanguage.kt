@@ -22,7 +22,7 @@ import com.aidenext.editor.language.treesitter.TreeSitterLanguage.Factory
 import com.aidenext.lsp.api.ILanguageServer
 import com.aidenext.lsp.api.ILanguageServerRegistry
 import com.aidenext.lsp.xml.XMLLanguageServer
-import com.aidenext.treesitter.xml.TSLanguageXml
+import com.itsaky.androidide.treesitter.xml.TSLanguageXml
 import io.github.rosemoe.sora.lang.Language.INTERRUPTION_LEVEL_STRONG
 import io.github.rosemoe.sora.util.MyCharacter
 

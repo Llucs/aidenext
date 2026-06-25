@@ -18,7 +18,7 @@
 package io.github.rosemoe.sora.editor.ts
 
 import android.os.Bundle
-import com.aidenext.treesitter.TSInputEdit
+import com.itsaky.androidide.treesitter.TSInputEdit
 import io.github.rosemoe.sora.editor.ts.spans.DefaultSpanFactory
 import io.github.rosemoe.sora.editor.ts.spans.TsSpanFactory
 import io.github.rosemoe.sora.lang.analysis.AnalyzeManager

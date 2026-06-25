@@ -17,24 +17,24 @@
 
 package com.aidenext.treesitter.api
 
-import com.aidenext.treesitter.TSInputEdit
-import com.aidenext.treesitter.TSLanguage
-import com.aidenext.treesitter.TSLookaheadIterator
-import com.aidenext.treesitter.TSNode
-import com.aidenext.treesitter.TSParser
-import com.aidenext.treesitter.TSPoint
-import com.aidenext.treesitter.TSQuery
-import com.aidenext.treesitter.TSQueryCapture
-import com.aidenext.treesitter.TSQueryCursor
-import com.aidenext.treesitter.TSQueryMatch
-import com.aidenext.treesitter.TSQueryPredicateStep
-import com.aidenext.treesitter.TSRange
-import com.aidenext.treesitter.TSTree
-import com.aidenext.treesitter.TSTreeCursor
-import com.aidenext.treesitter.TSTreeCursorNode
-import com.aidenext.treesitter.string.SynchronizedUTF16String
-import com.aidenext.treesitter.string.UTF16String
-import com.aidenext.treesitter.util.TSObjectFactory
+import com.itsaky.androidide.treesitter.TSInputEdit
+import com.itsaky.androidide.treesitter.TSLanguage
+import com.itsaky.androidide.treesitter.TSLookaheadIterator
+import com.itsaky.androidide.treesitter.TSNode
+import com.itsaky.androidide.treesitter.TSParser
+import com.itsaky.androidide.treesitter.TSPoint
+import com.itsaky.androidide.treesitter.TSQuery
+import com.itsaky.androidide.treesitter.TSQueryCapture
+import com.itsaky.androidide.treesitter.TSQueryCursor
+import com.itsaky.androidide.treesitter.TSQueryMatch
+import com.itsaky.androidide.treesitter.TSQueryPredicateStep
+import com.itsaky.androidide.treesitter.TSRange
+import com.itsaky.androidide.treesitter.TSTree
+import com.itsaky.androidide.treesitter.TSTreeCursor
+import com.itsaky.androidide.treesitter.TSTreeCursorNode
+import com.itsaky.androidide.treesitter.string.SynchronizedUTF16String
+import com.itsaky.androidide.treesitter.string.UTF16String
+import com.itsaky.androidide.treesitter.util.TSObjectFactory
 
 /**
  * [TSObjectFactory] implementation for AndroidIDE.

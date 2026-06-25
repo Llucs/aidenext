@@ -20,8 +20,8 @@ package com.aidenext.editor.language.treesitter
 import android.graphics.Color
 import androidx.core.graphics.ColorUtils
 import com.aidenext.editor.schemes.LanguageScheme
-import com.aidenext.treesitter.TSQuery
-import com.aidenext.treesitter.TSQueryCapture
+import com.itsaky.androidide.treesitter.TSQuery
+import com.itsaky.androidide.treesitter.TSQueryCapture
 import com.aidenext.utils.parseHexColor
 import io.github.rosemoe.sora.editor.ts.spans.DefaultSpanFactory
 import io.github.rosemoe.sora.editor.ts.spans.TsSpanFactory

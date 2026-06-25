@@ -18,9 +18,9 @@
 package com.aidenext.editor.utils
 
 import androidx.core.text.trimmedLength
-import com.aidenext.treesitter.TSNode
-import com.aidenext.treesitter.TSTree
-import com.aidenext.treesitter.getNodeAt
+import com.itsaky.androidide.treesitter.TSNode
+import com.itsaky.androidide.treesitter.TSTree
+import com.itsaky.androidide.treesitter.getNodeAt
 import io.github.rosemoe.sora.text.Content
 import io.github.rosemoe.sora.text.TextUtils
 import io.github.rosemoe.sora.util.IntPair

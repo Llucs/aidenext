@@ -17,7 +17,7 @@
 
 package com.aidenext.treesitter.api
 
-import com.aidenext.treesitter.TSTreeCursor
+import com.itsaky.androidide.treesitter.TSTreeCursor
 import com.aidenext.utils.DefaultRecyclable
 import com.aidenext.utils.RecyclableObjectPool
 

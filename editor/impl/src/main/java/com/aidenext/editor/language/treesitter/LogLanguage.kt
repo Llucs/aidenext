@@ -19,7 +19,7 @@ package com.aidenext.editor.language.treesitter
 
 import android.content.Context
 import com.aidenext.editor.language.treesitter.TreeSitterLanguage.Factory
-import com.aidenext.treesitter.log.TSLanguageLog
+import com.itsaky.androidide.treesitter.log.TSLanguageLog
 
 /**
  * Tree Sitter language implementation for logs.

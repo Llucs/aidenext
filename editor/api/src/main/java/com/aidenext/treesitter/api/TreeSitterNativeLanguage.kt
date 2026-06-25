@@ -17,7 +17,7 @@
 
 package com.aidenext.treesitter.api
 
-import com.aidenext.treesitter.TSLanguage
+import com.itsaky.androidide.treesitter.TSLanguage
 import com.aidenext.utils.DefaultRecyclable
 import com.aidenext.utils.RecyclableObjectPool
 

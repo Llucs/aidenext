@@ -25,7 +25,7 @@ import com.aidenext.editor.language.utils.CommonSymbolPairs
 import com.aidenext.lsp.api.ILanguageServer
 import com.aidenext.lsp.api.ILanguageServerRegistry
 import com.aidenext.lsp.java.JavaLanguageServer
-import com.aidenext.treesitter.java.TSLanguageJava
+import com.itsaky.androidide.treesitter.java.TSLanguageJava
 import io.github.rosemoe.sora.lang.Language.INTERRUPTION_LEVEL_SLIGHT
 import io.github.rosemoe.sora.util.MyCharacter
 import io.github.rosemoe.sora.widget.SymbolPairMatch

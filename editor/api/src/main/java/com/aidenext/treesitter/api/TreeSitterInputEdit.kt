@@ -17,8 +17,8 @@
 
 package com.aidenext.treesitter.api
 
-import com.aidenext.treesitter.TSInputEdit
-import com.aidenext.treesitter.TSPoint
+import com.itsaky.androidide.treesitter.TSInputEdit
+import com.itsaky.androidide.treesitter.TSPoint
 import com.aidenext.utils.DefaultRecyclable
 import com.aidenext.utils.RecyclableObjectPool
 

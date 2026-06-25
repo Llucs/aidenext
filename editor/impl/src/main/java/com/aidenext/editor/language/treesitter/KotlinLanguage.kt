@@ -19,7 +19,7 @@ package com.aidenext.editor.language.treesitter
 
 import android.content.Context
 import com.aidenext.editor.language.treesitter.TreeSitterLanguage.Factory
-import com.aidenext.treesitter.kotlin.TSLanguageKotlin
+import com.itsaky.androidide.treesitter.kotlin.TSLanguageKotlin
 import io.github.rosemoe.sora.lang.Language.INTERRUPTION_LEVEL_STRONG
 
 /**

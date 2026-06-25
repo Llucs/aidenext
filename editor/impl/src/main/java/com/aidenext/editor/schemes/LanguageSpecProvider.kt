@@ -24,7 +24,7 @@ import com.aidenext.editor.language.treesitter.predicates.EqualPredicate
 import com.aidenext.editor.language.treesitter.predicates.MatchPredicate
 import com.aidenext.editor.language.treesitter.predicates.NotEqualPredicate
 import com.aidenext.editor.language.treesitter.predicates.NotMatchPredicate
-import com.aidenext.treesitter.TSLanguage
+import com.itsaky.androidide.treesitter.TSLanguage
 import io.github.rosemoe.sora.editor.ts.LocalsCaptureSpec
 import io.github.rosemoe.sora.editor.ts.TsLanguageSpec
 import org.slf4j.LoggerFactory

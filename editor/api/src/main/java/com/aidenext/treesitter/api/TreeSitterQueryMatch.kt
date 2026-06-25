@@ -17,8 +17,8 @@
 
 package com.aidenext.treesitter.api
 
-import com.aidenext.treesitter.TSQueryCapture
-import com.aidenext.treesitter.TSQueryMatch
+import com.itsaky.androidide.treesitter.TSQueryCapture
+import com.itsaky.androidide.treesitter.TSQueryMatch
 import com.aidenext.utils.DefaultRecyclable
 import com.aidenext.utils.RecyclableObjectPool
 

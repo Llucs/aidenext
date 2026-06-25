@@ -17,9 +17,9 @@
 
 package com.aidenext.editor.language.treesitter
 
-import com.aidenext.treesitter.TSLanguage
-import com.aidenext.treesitter.TSQuery
-import com.aidenext.treesitter.TSQueryError
+import com.itsaky.androidide.treesitter.TSLanguage
+import com.itsaky.androidide.treesitter.TSQuery
+import com.itsaky.androidide.treesitter.TSQueryError
 import io.github.rosemoe.sora.editor.ts.TsLanguageSpec
 import java.io.Closeable
 

@@ -49,7 +49,7 @@ import com.aidenext.resources.localization.LocaleProvider
 import com.aidenext.stats.AndroidIDEStats
 import com.aidenext.stats.StatUploadWorker
 import com.aidenext.syntax.colorschemes.SchemeAndroidIDE
-import com.aidenext.treesitter.TreeSitter
+import com.itsaky.androidide.treesitter.TreeSitter
 import com.aidenext.ui.themes.IDETheme
 import com.aidenext.ui.themes.IThemeManager
 import com.aidenext.utils.RecyclableObjectPool
