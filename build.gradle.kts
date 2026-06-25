@@ -48,7 +48,7 @@ buildscript {
 // Root project has 'com.aidenext' as the group ID
 project.group = BuildConfig.packageName
 
-val kotlinVersion = "2.3.20"
+val kotlinVersion = "1.9.22"
 
 subprojects {
   if (project != rootProject) {
