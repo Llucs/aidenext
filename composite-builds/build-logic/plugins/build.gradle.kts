@@ -31,16 +31,6 @@ kotlin {
   }
 }
 
-configurations.all {
-  resolutionStrategy {
-    force("org.ow2.asm:asm:9.9")
-    force("org.ow2.asm:asm-commons:9.9")
-    force("org.ow2.asm:asm-tree:9.9")
-    force("org.ow2.asm:asm-util:9.9")
-    force("org.ow2.asm:asm-analysis:9.9")
-  }
-}
-
 dependencies {
   implementation(projects.buildLogic.common)
   implementation(projects.buildLogic.desugaring)
