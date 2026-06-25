@@ -44,8 +44,9 @@ dependencies {
     implementation(libs.common.markwon.extStrikethrough)
     implementation(libs.common.markwon.linkify)
     implementation(libs.common.markwon.recycler)
-    implementation(libs.google.material)
     implementation(libs.google.guava)
+    implementation(libs.google.material)
+    implementation(libs.google.jsr305)
     implementation(libs.common.hiddenApiBypass)
 
     // Do not increment version higher than 1.0.0-alpha09 since it will break ViewUtils and needs to be looked into

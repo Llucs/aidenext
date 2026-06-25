@@ -22,6 +22,7 @@ realm = "10.18.0"
 benchmark = "1.4.1"
 benchmark-junit4 = "1.4.1"
 checker-qual = "3.42.0"
+jsr305 = "3.0.2"
 
 [libraries]
 
@@ -119,6 +120,7 @@ google-protobuf = { module = "com.google.protobuf:protobuf-javalite", version = 
 google-java-format = { module = "com.google.googlejavaformat:google-java-format", version = "1.20.0" }
 google-flexbox = { module = "com.google.android.flexbox:flexbox", version = "3.0.0" }
 google-checker-qual = { module = "org.checkerframework:checker-qual", version.ref = "checker-qual" }
+google-jsr305 = { module = "com.google.code.findbugs:jsr305", version.ref = "jsr305" }
 
 # AAPT2
 aapt2-common = { module = "com.android.tools:common", version = "31.4.1" }
