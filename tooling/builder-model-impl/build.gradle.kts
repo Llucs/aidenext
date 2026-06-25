@@ -30,4 +30,6 @@ dependencies {
   implementation(libs.common.jkotlin)
 
   implementation(projects.utilities.buildInfo)
+
+  compileOnly(libs.android.gradle.plugin)
 }
