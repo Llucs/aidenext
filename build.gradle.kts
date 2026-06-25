@@ -81,9 +81,11 @@ subprojects {
 
   plugins.withId("com.android.application") {
     configureAndroidModule(libs.androidx.libDesugaring)
+    apply(plugin = "org.jetbrains.kotlin.android")
   }
   plugins.withId("com.android.library") {
     configureAndroidModule(libs.androidx.libDesugaring)
+    apply(plugin = "org.jetbrains.kotlin.android")
   }
 
   plugins.withId("java-library") { configureJavaModule() }
