@@ -80,9 +80,11 @@ subprojects {
   project.version = rootProject.version
 
   plugins.withId("com.android.application") {
+    apply("org.jetbrains.kotlin.android")
     configureAndroidModule(libs.androidx.libDesugaring)
   }
   plugins.withId("com.android.library") {
+    apply("org.jetbrains.kotlin.android")
     configureAndroidModule(libs.androidx.libDesugaring)
   }
 
@@ -101,10 +103,6 @@ subprojects {
       freeCompilerArgs.add("-Xstring-concat=inline")
       freeCompilerArgs.add("-Xskip-metadata-version-check")
     }
-  }
-
-  tasks.withType<JavaCompile>().configureEach {
-    dependsOn(tasks.withType<KotlinCompile>())
   }
 }
 
