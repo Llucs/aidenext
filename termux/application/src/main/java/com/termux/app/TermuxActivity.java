@@ -68,6 +68,8 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.Objects;
 
+import static com.termux.shared.termux.TermuxConstants.TERMUX_APP.TERMUX_ACTIVITY;
+
 /**
  * A terminal emulator activity.
  * <p/>

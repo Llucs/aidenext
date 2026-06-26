@@ -968,6 +968,12 @@ public final class TermuxConstants {
 
             /** Intent action to make termux request storage permissions */
             public static final String ACTION_REQUEST_PERMISSIONS = TermuxConstants.TERMUX_PACKAGE_NAME + ".app.request_storage_permissions"; // Default: "com.termux.app.request_storage_permissions"
+
+            /** Intent {@code String} extra for the session working directory. */
+            public static final String EXTRA_SESSION_WORKING_DIR = TERMUX_APP.TERMUX_ACTIVITY_NAME + ".EXTRA_SESSION_WORKING_DIR"; // Default: "com.termux.app.TermuxActivity.EXTRA_SESSION_WORKING_DIR"
+
+            /** Intent {@code String} extra for the session name. */
+            public static final String EXTRA_SESSION_NAME = TERMUX_APP.TERMUX_ACTIVITY_NAME + ".EXTRA_SESSION_NAME"; // Default: "com.termux.app.TermuxActivity.EXTRA_SESSION_NAME"
         }
 
 

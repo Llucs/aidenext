@@ -115,7 +115,7 @@ public class PrettyPrintingVisitor extends DefaultPrettyPrinterVisitor {
     }
   }
 
-  private Optional<ConfigurationOption> getOption(
+  protected Optional<ConfigurationOption> getOption(
       DefaultPrinterConfiguration.ConfigOption cOption) {
     return configuration.get(new DefaultConfigurationOption(cOption));
   }
