@@ -244,8 +244,7 @@ class OverrideSuperclassMethodsAction : BaseJavaCodeAction() {
 
         val newImports = JavaParserUtils.collectImports(executableType)
         sb.append("\n")
-        sb.append(method.toString())
-        sb.replace(Regex(Regex.escape("\n")), "\n${indentationString(indent)}")
+        sb.append(method.toString().replace(Regex(Regex.escape("\n")), "\n${indentationString(indent)}"))
         sb.append("\n")
 
         newImports.removeIf {

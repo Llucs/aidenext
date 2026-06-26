@@ -17,6 +17,8 @@
 
 package com.aidenext.treesitter
 
+import com.itsaky.androidide.treesitter.TSRange
+
 /**
  * The 0-based start line number.
  */

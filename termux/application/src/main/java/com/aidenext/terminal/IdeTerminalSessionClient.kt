@@ -22,22 +22,16 @@ import com.termux.app.terminal.TermuxTerminalSessionActivityClient
 import com.termux.terminal.TerminalSession
 import com.termux.terminal.TerminalSessionClient
 
-/**
- * [TerminalSessionClient] delegate for AndroidIDE.
- *
- * @author Akash Yadav
- */
 class IdeTerminalSessionClient(
   activity: TerminalActivity
 ) : TermuxTerminalSessionActivityClient(activity) {
+  private val mActivityRef = activity
 
   override fun onSessionFinished(finishedSession: TerminalSession) {
-    val termuxSession = mActivity?.termuxService?.getTermuxSessionForTerminalSession(
+    val termuxSession = mActivityRef.termuxService?.getTermuxSessionForTerminalSession(
       finishedSession)
-    if (termuxSession != null && termuxSession is IdesetupSession) {
-      // if the finished session was performing tools installation
-      // then set the result code for the installation process
-      mActivity.setResult(finishedSession.exitStatus)
+    if (termuxSession != null && IdesetupSession.isManagedSession(finishedSession)) {
+      mActivityRef.setResult(finishedSession.exitStatus)
     }
 
     super.onSessionFinished(finishedSession)

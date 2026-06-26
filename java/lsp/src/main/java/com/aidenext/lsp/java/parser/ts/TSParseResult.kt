@@ -17,7 +17,7 @@
 
 package com.aidenext.lsp.java.parser.ts
 
-import com.aidenext.treesitter.TSTree
+import com.itsaky.androidide.treesitter.TSTree
 import jdkx.tools.JavaFileObject
 import java.net.URI
 

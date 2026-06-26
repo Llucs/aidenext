@@ -59,4 +59,5 @@ dependencies {
   api(projects.testing.commonTest)
   api(projects.utilities.buildInfo)
   api(projects.utilities.shared)
+  api("io.realm:realm-android-library:${libs.versions.realm.get()}")
 }

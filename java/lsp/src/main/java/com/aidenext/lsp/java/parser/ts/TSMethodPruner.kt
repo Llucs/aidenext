@@ -17,11 +17,11 @@
 
 package com.aidenext.lsp.java.parser.ts
 
-import com.aidenext.treesitter.TSQuery
-import com.aidenext.treesitter.TSQueryCursor
-import com.aidenext.treesitter.TSQueryMatch
-import com.aidenext.treesitter.TSTree
-import com.aidenext.treesitter.java.TSLanguageJava
+import com.itsaky.androidide.treesitter.TSQuery
+import com.itsaky.androidide.treesitter.TSQueryCursor
+import com.itsaky.androidide.treesitter.TSQueryMatch
+import com.itsaky.androidide.treesitter.TSTree
+import com.itsaky.androidide.treesitter.java.TSLanguageJava
 
 /**
  * Helper class to prune method bodies in Java source code using.

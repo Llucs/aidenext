@@ -20,8 +20,8 @@ package com.aidenext.lsp.java.parser.ts
 import com.aidenext.eventbus.events.file.FileDeletionEvent
 import com.aidenext.eventbus.events.file.FileRenameEvent
 import com.aidenext.lsp.java.parser.IJavaParser
-import com.aidenext.treesitter.TSParser
-import com.aidenext.treesitter.java.TSLanguageJava
+import com.itsaky.androidide.treesitter.TSParser
+import com.itsaky.androidide.treesitter.java.TSLanguageJava
 import com.aidenext.utils.StopWatch
 import jdkx.tools.JavaFileObject
 import org.greenrobot.eventbus.EventBus

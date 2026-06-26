@@ -37,7 +37,8 @@ abstract class AdapterViewAdapter<T : AdapterView<*>> : ViewGroupAdapter<T>() {
 
   override fun applyBasic(view: IView) {
     super.applyBasic(view)
-    (view.view as AdapterView<*>).adapter = newSimpleAdapter(view.view.context)
+    @Suppress("UNCHECKED_CAST")
+    (view.view as AdapterView<android.widget.Adapter>).adapter = newSimpleAdapter(view.view.context)
     if (view is ViewGroupImpl) {
       view.childrenModifiable = false
     }

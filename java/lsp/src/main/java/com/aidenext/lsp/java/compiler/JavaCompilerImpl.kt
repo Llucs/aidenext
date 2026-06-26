@@ -19,6 +19,7 @@ package com.aidenext.lsp.java.compiler
 
 import com.aidenext.javac.services.compiler.ReusableContext
 import com.aidenext.javac.services.compiler.ReusableJavaCompiler
+import com.aidenext.lsp.java.compiler.SourceFileObject
 import com.aidenext.lsp.java.parser.ts.TSJavaParser
 import com.aidenext.lsp.java.parser.ts.TSMethodPruner.prune
 import com.aidenext.projects.FileManager

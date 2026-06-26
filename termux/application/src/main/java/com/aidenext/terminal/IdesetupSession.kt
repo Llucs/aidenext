@@ -28,44 +28,40 @@ import org.slf4j.LoggerFactory
 import java.io.File
 import java.nio.charset.StandardCharsets
 
-/**
- * [TermuxSession] implementation that is used to run the `idesetup` script during automatic
- * installation.
- *
- * @author Akash Yadav
- */
 class IdesetupSession private constructor(
-  terminalSession: TerminalSession,
-  executionCommand: ExecutionCommand,
-  termuxSessionClient: TermuxSessionClient?,
-  setStdoutOnExit: Boolean,
+  private val termuxSession: TermuxSession,
   private val script: File
-) : TermuxSession(
-  terminalSession,
-  executionCommand,
-  termuxSessionClient,
-  setStdoutOnExit
 ) {
+  val terminalSession: TerminalSession
+    get() = termuxSession.terminalSession
+
+  val executionCommand: ExecutionCommand
+    get() = termuxSession.executionCommand
 
   companion object {
-
     private val log = LoggerFactory.getLogger(IdesetupSession::class.java)
+    private val managedSessionHandles = HashSet<String>()
 
     @JvmStatic
-    fun wrap(session: TermuxSession?, script: File) : IdesetupSession? {
-      return session?.let { IdesetupSession(it, script) }
+    fun isManagedSession(terminalSession: TerminalSession): Boolean =
+      managedSessionHandles.contains(terminalSession.mHandle)
+
+    @JvmStatic
+    fun wrap(session: TermuxSession?, script: File): IdesetupSession? {
+      if (session == null) return null
+      val wrapped = IdesetupSession(session, script)
+      managedSessionHandles.add(session.terminalSession.mHandle)
+      return wrapped
     }
 
     @JvmStatic
-    fun createScript(context: Context) : File? {
+    fun createScript(context: Context): File? {
       val script = Environment.createTempFile()
 
-      // write script contents
       if (!writeIdesetupScript(context, script)) {
         return null
       }
 
-      // make it readable and executable-only
       FileUtils.setFilePermissions("idesetupScript", script.absolutePath, "r-x")
 
       return script
@@ -83,20 +79,12 @@ class IdesetupSession private constructor(
 
       return true
     }
-
   }
 
-  private constructor(src: TermuxSession, script: File) : this(
-    src.terminalSession,
-    src.executionCommand,
-    src.termuxSessionClient,
-    src.isSetStdoutOnExit,
-    script
-  )
+  fun finish() {
+    managedSessionHandles.remove(termuxSession.terminalSession.mHandle)
+    termuxSession.finish()
 
-  override fun finish() {
-    super.finish()
-    // Delete the temporary script file once the session is finished
     val error = FileUtils.deleteFile("idesetupScript", script.absolutePath, true)
     if (error != null) {
       log.error(error.errorLogString)
