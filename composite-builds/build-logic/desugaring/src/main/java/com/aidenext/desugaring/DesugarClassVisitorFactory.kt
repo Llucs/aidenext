@@ -47,7 +47,7 @@ abstract class DesugarClassVisitorFactory :
     }
 
     return DesugarClassVisitor(params, classContext,
-      262144, nextClassVisitor)
+      327680, nextClassVisitor)
   }
 
   override fun isInstrumentable(classData: ClassData): Boolean {
