@@ -77,8 +77,12 @@ class DesugarMethodVisitor @JvmOverloads constructor(
       return thisReplacement
     }
 
-    val classData =
-      classContext.loadClassData(owner.replace('/', '.')) ?: return null
+    val classData = try {
+      classContext.loadClassData(owner.replace('/', '.'))
+    } catch (e: Exception) {
+      log.warn("Failed to load class data for $owner", e)
+      return null
+    } ?: return null
 
     // case 2: check if we have a replacement for a superclass
     for (superclass in classData.superClasses) {
