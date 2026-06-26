@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-sdk android:minSdk="16" tools:overrideLibrary="androidx.test.espresso.idling.resource" />
+    <uses-sdk android:minSdk="21" tools:overrideLibrary="androidx.test.espresso.idling.resource" />
 </manifest>
