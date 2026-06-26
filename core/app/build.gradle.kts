@@ -73,7 +73,8 @@ extensions.configure<com.android.build.api.dsl.ApplicationExtension> {
 desugaring {
   replacements {
     includePackage(
-      "org.eclipse.jgit",
+      "com.aidenext",
+      "com.termux",
     )
 
     applyJavaIOReplacements()
