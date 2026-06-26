@@ -47,7 +47,7 @@ abstract class DesugarClassVisitorFactory :
     }
 
     return DesugarClassVisitor(params, classContext,
-      instrumentationContext.apiVersion.get(), nextClassVisitor)
+      524288, nextClassVisitor)
   }
 
   override fun isInstrumentable(classData: ClassData): Boolean {

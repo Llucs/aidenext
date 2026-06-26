@@ -30,8 +30,6 @@ dependencies {
   implementation(libs.composite.desugaringCore)
 
   compileOnly(libs.android.gradle.plugin)
-  implementation("org.ow2.asm:asm:9.6")
-  implementation("org.ow2.asm:asm-commons:9.6")
 
   testImplementation(libs.tests.junit)
   testImplementation(libs.tests.google.truth)
