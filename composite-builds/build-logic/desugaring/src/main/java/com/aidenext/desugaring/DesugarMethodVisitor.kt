@@ -32,6 +32,8 @@ class DesugarMethodVisitor @JvmOverloads constructor(
   companion object {
 
     private val log = LoggerFactory.getLogger(DesugarMethodVisitor::class.java)
+
+    private var superClassLookupBroken = false
   }
 
   override fun visitMethodInsn(opcode: Int, owner: String?, name: String?,
@@ -77,10 +79,13 @@ class DesugarMethodVisitor @JvmOverloads constructor(
       return thisReplacement
     }
 
+    if (superClassLookupBroken) return null
+
     val classData = try {
       classContext.loadClassData(owner.replace('/', '.'))
     } catch (e: Exception) {
-      log.warn("Failed to load class data for $owner", e)
+      superClassLookupBroken = true
+      log.warn("Failed to load class data for $owner. Disabling superclass lookup.", e)
       return null
     } ?: return null
 
