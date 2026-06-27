@@ -27,7 +27,6 @@ import com.aidenext.build.config.isFDroidBuild
 import com.aidenext.build.config.projectVersionCode
 import com.aidenext.plugins.NoDesugarPlugin
 import com.aidenext.plugins.util.SdkUtils.getAndroidJar
-import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.provider.Provider
@@ -94,11 +93,11 @@ private fun Project.configureAppModule(
       testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    compileOptions.sourceCompatibility = JavaVersion.VERSION_11
-    compileOptions.targetCompatibility = JavaVersion.VERSION_11
+    compileOptions.sourceCompatibility = BuildConfig.javaVersion
+    compileOptions.targetCompatibility = BuildConfig.javaVersion
 
     project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
-      compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+      compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget(BuildConfig.javaVersion.toString()))
     }
 
     if (!project.plugins.hasPlugin(NoDesugarPlugin::class.java)) {
@@ -159,11 +158,11 @@ private fun Project.configureLibraryModule(
       "modeling32.png"
     )
 
-    compileOptions.sourceCompatibility = JavaVersion.VERSION_11
-    compileOptions.targetCompatibility = JavaVersion.VERSION_11
+    compileOptions.sourceCompatibility = BuildConfig.javaVersion
+    compileOptions.targetCompatibility = BuildConfig.javaVersion
 
     project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
-      compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+      compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.fromTarget(BuildConfig.javaVersion.toString()))
     }
 
     defaultConfig {
