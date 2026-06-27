@@ -110,7 +110,7 @@ class TermuxDebuggingLogLevelPreference(
     val currentLogLevel = TermuxAppSharedPreferences.build(preference.context, false)?.logLevel
       ?: Logger.DEFAULT_LOG_LEVEL
     return Array(logLevels.size) {
-      PreferenceChoices.Entry(logLevelLabels[it], currentLogLevel == logLevels[it],
+      PreferenceChoices.Entry(logLevelLabels[it], currentLogLevel.toString() == logLevels[it].toString(),
         logLevels[it])
     }
   }

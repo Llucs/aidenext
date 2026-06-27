@@ -136,6 +136,7 @@ dependencies {
   implementation(libs.composite.appintro)
   implementation(libs.composite.desugaringCore)
   implementation(libs.composite.javapoet)
+  annotationProcessor(libs.common.eventbus.ap)
 
   // Local projects here
   implementation(projects.core.actions)

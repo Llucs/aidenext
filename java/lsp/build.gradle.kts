@@ -44,6 +44,7 @@ extensions.configure<com.android.build.api.dsl.LibraryExtension> {
 dependencies {
   ksp(projects.annotation.processorsKsp)
   annotationProcessor(libs.google.auto.service)
+  annotationProcessor(libs.common.eventbus.ap)
 
   api(projects.core.indexingApi)
 

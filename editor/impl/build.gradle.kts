@@ -38,6 +38,7 @@ extensions.configure<com.android.build.api.dsl.LibraryExtension> {
 
 dependencies {
     ksp(projects.annotation.processorsKsp)
+    annotationProcessor(libs.common.eventbus.ap)
     
     api(libs.androidide.ts)
     api(libs.androidide.ts.java)
