@@ -93,8 +93,12 @@ private fun Project.configureAppModule(
       testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    compileOptions.sourceCompatibility = BuildConfig.javaVersion
-    compileOptions.targetCompatibility = BuildConfig.javaVersion
+    compileOptions.sourceCompatibility = JavaVersion.VERSION_11
+    compileOptions.targetCompatibility = JavaVersion.VERSION_11
+
+    project.tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+      compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+    }
 
     if (!project.plugins.hasPlugin(NoDesugarPlugin::class.java)) {
       compileOptions.isCoreLibraryDesugaringEnabled = true
@@ -154,8 +158,12 @@ private fun Project.configureLibraryModule(
       "modeling32.png"
     )
 
-    compileOptions.sourceCompatibility = BuildConfig.javaVersion
-    compileOptions.targetCompatibility = BuildConfig.javaVersion
+    compileOptions.sourceCompatibility = JavaVersion.VERSION_11
+    compileOptions.targetCompatibility = JavaVersion.VERSION_11
+
+    project.tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+      compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+    }
 
     defaultConfig {
       minSdk = BuildConfig.minSdk
