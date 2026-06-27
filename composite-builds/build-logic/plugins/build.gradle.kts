@@ -37,6 +37,7 @@ dependencies {
   implementation(projects.buildLogic.propertiesParser)
 
   compileOnly(libs.android.gradle.plugin)
+  compileOnly(libs.kotlin.gradle.plugin)
   implementation(libs.maven.publish)
 
   implementation(libs.common.jkotlin)
