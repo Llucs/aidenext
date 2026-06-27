@@ -38,12 +38,22 @@ abstract class DesugarClassVisitorFactory :
   }
 
   override fun createClassVisitor(classContext: ClassContext,
-                                  nextClassVisitor: ClassVisitor
+                                   nextClassVisitor: ClassVisitor
   ): ClassVisitor {
     val params = parameters.orNull
     if (params == null) {
       log.warn("Could not find desugaring parameters. Disabling desugaring.")
       return nextClassVisitor
+    }
+
+    try {
+      val cvClass = org.objectweb.asm.ClassVisitor::class.java
+      val source = cvClass.protectionDomain.codeSource
+      log.warn("ClassVisitor loaded from classLoader={} location={}", cvClass.classLoader, source?.location)
+      val cvPkg = cvClass.getPackage()
+      log.warn("ClassVisitor package={} implementationVersion={}", cvPkg?.name, cvPkg?.implementationVersion)
+    } catch (e: Exception) {
+      log.warn("Error checking ClassVisitor source", e)
     }
 
     return DesugarClassVisitor(params, classContext,
