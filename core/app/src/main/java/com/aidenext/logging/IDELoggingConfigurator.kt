@@ -31,7 +31,6 @@ import com.aidenext.logging.encoder.IDELogFormatEncoder
  * @author Akash Yadav
  */
 @ConfiguratorRank(ConfiguratorRank.CUSTOM_TOP_PRIORITY)
-@AutoService(Configurator::class)
 @Suppress("UNUSED")
 class IDELoggingConfigurator : ContextAwareBase(), Configurator {
 

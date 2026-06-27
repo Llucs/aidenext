@@ -36,7 +36,7 @@ extensions.configure<com.android.build.api.dsl.LibraryExtension> {
   namespace = "${BuildConfig.packageName}.logsender"
 
   defaultConfig {
-    minSdk = 21
+    minSdk = 16
 
     vectorDrawables {
       useSupportLibrary = true
