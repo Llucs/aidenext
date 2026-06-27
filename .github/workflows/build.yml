@@ -15,6 +15,10 @@ on:
       - '.github/workflows/crowdin_contributors.yml'
   workflow_dispatch: { }
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   IDE_SIGNING_ALIAS: ${{ secrets.IDE_SIGNING_ALIAS }}
@@ -38,10 +42,6 @@ jobs:
     name: Build APK
     runs-on: ubuntu-latest
     steps:
-      - name: Cancel previous runs
-        uses: styfle/cancel-workflow-action@0.13.1
-        with:
-          access_token: ${{ github.token }}
       - name: Checkout
         uses: actions/checkout@v6
         with:
