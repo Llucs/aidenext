@@ -27,6 +27,7 @@ import com.aidenext.build.config.isFDroidBuild
 import com.aidenext.build.config.projectVersionCode
 import com.aidenext.plugins.NoDesugarPlugin
 import com.aidenext.plugins.util.SdkUtils.getAndroidJar
+import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.artifacts.MinimalExternalModuleDependency
 import org.gradle.api.provider.Provider
@@ -96,7 +97,7 @@ private fun Project.configureAppModule(
     compileOptions.sourceCompatibility = JavaVersion.VERSION_11
     compileOptions.targetCompatibility = JavaVersion.VERSION_11
 
-    project.tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
       compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
     }
 
@@ -161,7 +162,7 @@ private fun Project.configureLibraryModule(
     compileOptions.sourceCompatibility = JavaVersion.VERSION_11
     compileOptions.targetCompatibility = JavaVersion.VERSION_11
 
-    project.tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    project.tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).configureEach {
       compilerOptions.jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
     }
 
