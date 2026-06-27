@@ -21,7 +21,6 @@ import com.android.build.api.instrumentation.AsmClassVisitorFactory
 import com.android.build.api.instrumentation.ClassContext
 import com.android.build.api.instrumentation.ClassData
 import org.objectweb.asm.ClassVisitor
-import org.objectweb.asm.Opcodes
 import org.slf4j.LoggerFactory
 
 /**
@@ -48,7 +47,7 @@ abstract class DesugarClassVisitorFactory :
     }
 
     return DesugarClassVisitor(params, classContext,
-      Opcodes.ASM9, nextClassVisitor)
+      458752, nextClassVisitor)
   }
 
   override fun isInstrumentable(classData: ClassData): Boolean {
