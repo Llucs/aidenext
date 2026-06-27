@@ -22,6 +22,7 @@ plugins {
   id("com.android.library")
   id("kotlin-parcelize")
   id("com.google.devtools.ksp") version libs.versions.ksp
+  kotlin("kapt")
 }
 
 
@@ -40,7 +41,7 @@ extensions.configure<com.android.build.api.dsl.LibraryExtension> {
 dependencies {
 
   ksp(projects.annotation.processorsKsp)
-  annotationProcessor(libs.google.auto.service)
+  kapt(libs.google.auto.service)
 
   api(projects.event.eventbus)
   api(projects.event.eventbusEvents)

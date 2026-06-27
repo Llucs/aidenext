@@ -20,6 +20,7 @@ import com.aidenext.build.config.BuildConfig
 
 plugins {
     id("com.android.library")
+    kotlin("kapt")
 }
 
 extensions.configure<com.android.build.api.dsl.LibraryExtension> {
@@ -27,7 +28,7 @@ extensions.configure<com.android.build.api.dsl.LibraryExtension> {
 }
 
 dependencies {
-    annotationProcessor(libs.google.auto.service)
+    kapt(libs.google.auto.service)
 
     api(projects.utilities.lookup)
     api(projects.xml.resourcesApi)

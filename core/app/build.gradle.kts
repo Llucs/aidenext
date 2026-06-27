@@ -87,7 +87,7 @@ dependencies {
 
   // Annotation processors
   annotationProcessor(libs.common.glide.ap)
-  annotationProcessor(libs.google.auto.service)
+  kapt(libs.google.auto.service)
   ksp(projects.annotation.processorsKsp)
 
   implementation(libs.common.editor)
