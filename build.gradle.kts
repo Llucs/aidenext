@@ -42,7 +42,7 @@ buildscript {
   dependencies {
     classpath(libs.kotlin.gradle.plugin)
     classpath(libs.nav.safe.args.gradle.plugin)
-    classpath("org.ow2.asm:asm:9.6")
+    classpath("org.ow2.asm:asm:9.7")
   }
 }
 
@@ -68,11 +68,11 @@ subprojects {
         }
       }
       force(
-        "org.ow2.asm:asm:9.6",
-        "org.ow2.asm:asm-commons:9.6",
-        "org.ow2.asm:asm-tree:9.6",
-        "org.ow2.asm:asm-analysis:9.6",
-        "org.ow2.asm:asm-util:9.6",
+        "org.ow2.asm:asm:9.7",
+        "org.ow2.asm:asm-commons:9.7",
+        "org.ow2.asm:asm-tree:9.7",
+        "org.ow2.asm:asm-analysis:9.7",
+        "org.ow2.asm:asm-util:9.7",
       )
     }
   }
