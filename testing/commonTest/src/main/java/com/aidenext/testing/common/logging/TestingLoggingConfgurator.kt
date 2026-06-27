@@ -22,12 +22,10 @@ import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.spi.Configurator
 import ch.qos.logback.classic.spi.ConfiguratorRank
 import ch.qos.logback.core.spi.ContextAwareBase
-import com.google.auto.service.AutoService
 import com.aidenext.logging.JvmStdErrAppender
 import com.aidenext.logging.encoder.IDELogFormatEncoder
 
 @ConfiguratorRank(ConfiguratorRank.CUSTOM_HIGH_PRIORITY)
-@AutoService(Configurator::class)
 @Suppress("UNUSED")
 class ToolingLoggingConfigurator : ContextAwareBase(), Configurator {
 

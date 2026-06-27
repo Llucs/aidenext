@@ -4,8 +4,8 @@ buildscript {
     }
     
     project.ext {
-        compileSdk = 33
-        buildTools = "33.0.0"
+        compileSdk = 34
+        buildTools = "34.0.0"
         appId = "com.itsaky.test.app"
         minSdk = 21
         targetSdk = 33

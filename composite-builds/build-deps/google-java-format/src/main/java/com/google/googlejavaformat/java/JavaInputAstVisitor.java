@@ -51,7 +51,7 @@ import com.google.common.base.Throwables;
 import com.google.common.base.Verify;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListUtils;
+
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
@@ -2434,7 +2434,7 @@ public class JavaInputAstVisitor extends TreePathScanner<Void, Void> {
                 // we're seeing annotations or modifiers
                 annotationRanges.contains(tok.getPosition()) || isModifier(tok.getText()));
     ImmutableList<AnnotationOrModifier> modifiers =
-        ImmutableListUtils.copyOf(
+        ImmutableList.copyOf(
             Streams.concat(
                     toks.stream()
                         // reject tokens from inside AnnotationTrees, we only want modifiers

@@ -23,6 +23,7 @@ import com.aidenext.lookup.Lookup
 import com.aidenext.projects.builder.BuildService
 import com.aidenext.tooling.api.IProject
 import com.aidenext.utils.ServiceLoader
+import com.aidenext.utils.ServiceNotFoundException
 import java.io.File
 
 /**
@@ -41,8 +42,11 @@ interface IProjectManager {
      */
     @JvmStatic
     fun getInstance(): IProjectManager {
-      return projectManager ?: ServiceLoader.load(IProjectManager::class.java).findFirstOrThrow()
-        .also {
+      return projectManager ?: try {
+        ServiceLoader.load(IProjectManager::class.java).findFirstOrThrow()
+      } catch (e: ServiceNotFoundException) {
+        throw RuntimeException("No IProjectManager implementation found", e)
+      }.also {
           projectManager = it
         }
     }

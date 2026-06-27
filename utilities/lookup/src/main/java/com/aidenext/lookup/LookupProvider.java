@@ -19,6 +19,7 @@ package com.aidenext.lookup;
 
 import com.aidenext.lookup.internal.DefaultLookup;
 import com.aidenext.utils.ServiceLoader;
+import com.aidenext.utils.ServiceNotFoundException;
 import com.aidenext.utils.VMUtils;
 
 /**
@@ -42,7 +43,12 @@ class LookupProvider {
         return sLookup = new DefaultLookup();
       }
 
-      return sLookup = ServiceLoader.load(Lookup.class).findFirstOrThrow();
+      try {
+        return sLookup = ServiceLoader.load(Lookup.class).findFirstOrThrow();
+      } catch (ServiceNotFoundException e) {
+        // If service is not found (e.g., in testing), fall back to default
+        return sLookup = new DefaultLookup();
+      }
     }
   }
 }
