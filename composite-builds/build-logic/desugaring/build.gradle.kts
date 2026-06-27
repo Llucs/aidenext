@@ -27,6 +27,8 @@ kotlin {
 
 dependencies {
   implementation(gradleApi())
+  implementation("org.ow2.asm:asm:9.6")
+  implementation("org.ow2.asm:asm-commons:9.6")
   implementation(libs.composite.desugaringCore)
 
   compileOnly(libs.android.gradle.plugin)
