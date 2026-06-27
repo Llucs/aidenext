@@ -85,6 +85,13 @@ buildscript {
   }
 }
 
+buildscript.configurations.all {
+  resolutionStrategy {
+    force("org.ow2.asm:asm:9.7.1")
+    force("org.ow2.asm:asm-commons:9.7.1")
+  }
+}
+
 val isGitRepo by lazy {
   cmdOutput("git", "rev-parse", "--is-inside-work-tree").trim() == "true"
 }
