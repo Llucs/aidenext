@@ -28,6 +28,7 @@ plugins {
   id("androidx.navigation.safeargs.kotlin")
   id("com.aidenext.desugaring")
   id("com.google.devtools.ksp") version libs.versions.ksp
+  kotlin("kapt")
 }
 
 apply {
@@ -136,7 +137,7 @@ dependencies {
   implementation(libs.composite.appintro)
   implementation(libs.composite.desugaringCore)
   implementation(libs.composite.javapoet)
-  annotationProcessor(libs.common.eventbus.ap)
+  kapt(libs.common.eventbus.ap)
 
   // Local projects here
   implementation(projects.core.actions)

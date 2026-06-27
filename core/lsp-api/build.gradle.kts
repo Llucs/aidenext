@@ -21,6 +21,7 @@ import com.aidenext.build.config.BuildConfig
 plugins {
     id("com.android.library")
     id("com.google.devtools.ksp") version libs.versions.ksp
+    kotlin("kapt")
 }
 
 
@@ -37,7 +38,7 @@ extensions.configure<com.android.build.api.dsl.LibraryExtension> {
 }
 
 dependencies {
-    annotationProcessor(libs.common.eventbus.ap)
+    kapt(libs.common.eventbus.ap)
     
     ksp(projects.annotation.processorsKsp)
 
