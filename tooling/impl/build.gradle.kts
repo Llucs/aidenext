@@ -85,7 +85,7 @@ dependencies {
 
   implementation(libs.common.jkotlin)
   implementation(gradleApi())
-  implementation("org.gradle:gradle-tooling-api:${gradle.gradleVersion!!}")
+  implementation("org.gradle:gradle-tooling-api:${gradle.gradleVersion}")
   implementation(libs.google.auto.service.annotations)
   implementation(libs.xml.xercesImpl)
   implementation(libs.xml.apis)
