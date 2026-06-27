@@ -82,13 +82,8 @@ buildscript {
   }
   dependencies {
     classpath("com.mooltiverse.oss.nyx:gradle:3.1.4")
-  }
-}
-
-buildscript.configurations.all {
-  resolutionStrategy {
-    force("org.ow2.asm:asm:9.7.1")
-    force("org.ow2.asm:asm-commons:9.7.1")
+    classpath("org.ow2.asm:asm:9.7.1")
+    classpath("org.ow2.asm:asm-commons:9.7.1")
   }
 }
 

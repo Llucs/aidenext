@@ -46,13 +46,6 @@ buildscript {
   }
 }
 
-buildscript.configurations.all {
-  resolutionStrategy {
-    force("org.ow2.asm:asm:9.7")
-    force("org.ow2.asm:asm-commons:9.7")
-  }
-}
-
 // Root project has 'com.aidenext' as the group ID
 project.group = BuildConfig.packageName
 
