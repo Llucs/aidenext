@@ -22,7 +22,7 @@ package com.aidenext.utils;
  *
  * @author Akash Yadav
  */
-class ServiceNotFoundException extends IllegalStateException {
+public class ServiceNotFoundException extends IllegalStateException {
 
   public ServiceNotFoundException(Class<?> service) {
     super("Cannot find service " + service);
