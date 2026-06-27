@@ -67,7 +67,13 @@ subprojects {
           useVersion(kotlinVersion)
         }
       }
-
+      force(
+        "org.ow2.asm:asm:9.6",
+        "org.ow2.asm:asm-commons:9.6",
+        "org.ow2.asm:asm-tree:9.6",
+        "org.ow2.asm:asm-analysis:9.6",
+        "org.ow2.asm:asm-util:9.6",
+      )
     }
   }
 
